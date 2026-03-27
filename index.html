@@ -4,672 +4,252 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>XCALIBER — AI Decision Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap');
-:root{--black:#000000;--white:#ffffff;--blue:#00d4ff;--gray:#111111;--gray2:#1a1a1a;--gray3:#333333;--dim:#888888}
 *{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#000;--white:#fff;--blue:#00d4ff;--gray:#0a0a0a;--gray2:#111;--gray3:#1a1a1a;--border:#1f1f1f;--dim:#555;--dim2:#2a2a2a}
+html{scroll-behavior:smooth}
 body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-header{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid #111;position:sticky;top:0;background:rgba(0,0,0,0.97);backdrop-filter:blur(10px);z-index:100}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px}.logo span{color:var(--blue)}
-.htag{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase}
-.hero{text-align:center;padding:80px 40px 60px;position:relative}
-.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,212,255,0.06) 0%,transparent 70%);pointer-events:none}
-.btag{display:inline-block;font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;border:1px solid rgba(0,212,255,0.3);padding:6px 16px;margin-bottom:30px;animation:fadeIn 0.6s ease}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,96px);letter-spacing:6px;line-height:0.95;margin-bottom:20px;animation:fadeUp 0.6s ease 0.1s both}
-h1 em{font-style:normal;color:var(--blue)}
-.sub{font-size:16px;color:var(--dim);max-width:500px;margin:0 auto 40px;line-height:1.6;font-weight:300;animation:fadeUp 0.6s ease 0.2s both}
-.setup{max-width:700px;margin:0 auto 20px;animation:fadeUp 0.6s ease 0.25s both}
-.lbl{font-size:10px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:6px}
-input[type=password],input[type=text]{width:100%;background:var(--gray);border:1px solid var(--gray3);color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;padding:12px 16px;outline:none;transition:border-color 0.3s}
-input:focus{border-color:rgba(0,212,255,0.3)}
-input::placeholder{color:#333}
-.iarea{max-width:700px;margin:0 auto;animation:fadeUp 0.6s ease 0.3s both}
-.iwrap{position:relative;margin-bottom:16px}
-textarea{width:100%;background:var(--gray);border:1px solid var(--gray3);color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;padding:20px 24px;resize:none;height:140px;outline:none;transition:border-color 0.3s;line-height:1.6}
-textarea::placeholder{color:#444}
-textarea:focus{border-color:rgba(0,212,255,0.4)}
-.cc{position:absolute;bottom:12px;right:16px;font-size:11px;color:#333}
-.btn{width:100%;background:var(--white);color:var(--black);border:none;padding:18px 32px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:4px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:12px}
-.btn:hover{background:var(--blue);color:var(--black);transform:translateY(-1px)}
-.btn:disabled{background:#222;color:#444;cursor:not-allowed;transform:none}
-.loading{display:none;text-align:center;padding:40px;color:var(--dim);font-size:13px;letter-spacing:2px;text-transform:uppercase}
-.loading.active{display:block}
-.lbar{width:200px;height:1px;background:#111;margin:16px auto 0;position:relative;overflow:hidden}
-.lbar::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--blue);animation:load 1.5s infinite}
-@keyframes load{to{left:100%}}
-.result{display:none;max-width:700px;margin:40px auto 0;animation:fadeUp 0.5s ease}
-.result.active{display:block}
-.rhead{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #111}
-.rtag{font-size:10px;letter-spacing:3px;color:var(--blue);text-transform:uppercase}
-.cbadge{margin-left:auto;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue);letter-spacing:2px}
-.dbox{background:var(--gray);border-left:2px solid var(--blue);padding:24px 28px;margin-bottom:20px}
-.dbox h3{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:12px}
-.dtext{font-size:15px;line-height:1.7;color:var(--white);font-weight:300;white-space:pre-wrap}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#111;margin:60px auto 0;max-width:700px}
-.stat{background:var(--black);padding:24px;text-align:center}
-.snum{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--blue);letter-spacing:2px}
-.slbl{font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:4px}
-footer{text-align:center;padding:40px;margin-top:80px;border-top:1px solid #111;font-size:11px;letter-spacing:3px;color:#333;text-transform:uppercase}
+
+/* BG */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+.bg::before{content:'';position:absolute;width:900px;height:900px;background:radial-gradient(circle,rgba(0,212,255,0.035) 0%,transparent 60%);top:-300px;left:50%;transform:translateX(-50%);animation:glow 10s ease-in-out infinite}
+.bg::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,0.02) 0%,transparent 60%);bottom:5%;right:5%;animation:glow 14s ease-in-out infinite reverse}
+@keyframes glow{0%,100%{opacity:1;transform:translateX(-50%) scale(1)}50%{opacity:0.5;transform:translateX(-50%) scale(1.3)}}
+
+.grid-bg{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.015) 1px,transparent 1px);background-size:80px 80px;pointer-events:none}
+
+/* PARTICLES */
+.pts{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.pt{position:absolute;width:1.5px;height:1.5px;background:var(--blue);border-radius:50%;opacity:0;animation:rise linear infinite}
+.pt:nth-child(1){left:8%;animation-duration:18s;animation-delay:0s}
+.pt:nth-child(2){left:22%;animation-duration:24s;animation-delay:4s}
+.pt:nth-child(3){left:38%;animation-duration:20s;animation-delay:8s}
+.pt:nth-child(4){left:52%;animation-duration:26s;animation-delay:2s}
+.pt:nth-child(5){left:67%;animation-duration:22s;animation-delay:6s}
+.pt:nth-child(6){left:80%;animation-duration:28s;animation-delay:10s}
+.pt:nth-child(7){left:14%;animation-duration:16s;animation-delay:3s}
+.pt:nth-child(8){left:44%;animation-duration:30s;animation-delay:12s}
+.pt:nth-child(9){left:72%;animation-duration:19s;animation-delay:1s}
+@keyframes rise{0%{bottom:-5px;opacity:0}15%{opacity:0.7}85%{opacity:0.2}100%{bottom:102%;opacity:0}}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:1000;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.94);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:6px;color:var(--white);text-decoration:none}
+.logo b{color:var(--blue);font-weight:400}
+.hnav{display:flex;align-items:center;gap:28px}
+.hnav a{font-size:10px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;text-decoration:none;transition:color 0.2s}
+.hnav a:hover{color:var(--white)}
+.hpill{font-size:10px;letter-spacing:2px;color:var(--blue);text-transform:uppercase;border:1px solid rgba(0,212,255,0.25);padding:5px 14px;background:rgba(0,212,255,0.04);display:flex;align-items:center;gap:6px}
+.hpill::before{content:'';width:5px;height:5px;background:var(--blue);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.1}}
+
+/* MAIN */
+main{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;padding:120px 24px 80px}
+
+/* HERO */
+.hero{text-align:center;max-width:760px;width:100%;margin-bottom:52px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;border:1px solid rgba(0,212,255,0.2);padding:7px 20px;margin-bottom:40px;background:rgba(0,212,255,0.03);animation:fadeIn 0.8s ease both}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,11vw,128px);letter-spacing:3px;line-height:0.86;margin-bottom:32px;animation:fadeUp 0.8s ease 0.2s both}
+h1 .ac{color:var(--blue)}
+.sub{font-size:17px;color:var(--dim);line-height:1.7;font-weight:300;max-width:460px;margin:0 auto;animation:fadeUp 0.8s ease 0.35s both}
+
+/* CARD */
+.card{width:100%;max-width:660px;background:var(--gray);border:1px solid var(--border);padding:36px;position:relative;animation:fadeUp 0.8s ease 0.5s both}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--blue) 50%,transparent 100%);opacity:0.4}
+
+.flabel{font-size:10px;letter-spacing:3px;color:#333;text-transform:uppercase;margin-bottom:8px}
+
+input[type=password]{width:100%;background:#0c0c0c;border:1px solid var(--border);color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;padding:13px 16px;outline:none;transition:border-color 0.3s,background 0.3s;letter-spacing:1px;margin-bottom:20px}
+input[type=password]:focus{border-color:rgba(0,212,255,0.35);background:#0f0f0f}
+input[type=password]::placeholder{color:#2a2a2a}
+
+.sep{height:1px;background:var(--border);margin:20px 0}
+
+.twrap{position:relative;margin-bottom:20px}
+textarea{width:100%;background:#0c0c0c;border:1px solid var(--border);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;line-height:1.7;padding:16px;resize:none;height:130px;outline:none;transition:border-color 0.3s}
+textarea:focus{border-color:rgba(0,212,255,0.35)}
+textarea::placeholder{color:#2a2a2a;font-style:italic}
+.cc{position:absolute;bottom:10px;right:12px;font-size:10px;color:#222;letter-spacing:1px}
+
+/* BTN */
+.btn{width:100%;background:var(--white);color:var(--black);border:none;padding:17px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:5px;cursor:pointer;transition:background 0.25s,color 0.25s;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn:hover{background:var(--blue);color:var(--black)}
+.btn:disabled{background:var(--gray3);color:var(--dim);cursor:not-allowed}
+
+/* LOADING */
+.ld{display:none;padding:32px 0;text-align:center}
+.ld.on{display:block}
+.ldtxt{font-size:10px;letter-spacing:4px;color:var(--dim);text-transform:uppercase;margin-bottom:18px;animation:fade 1.8s infinite}
+@keyframes fade{0%,100%{opacity:0.3}50%{opacity:1}}
+.lbar{width:220px;height:1px;background:var(--border);margin:0 auto;position:relative;overflow:hidden}
+.lbar::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,var(--blue),transparent);animation:scan 2s ease-in-out infinite}
+@keyframes scan{to{left:140%}}
+
+/* RESULT */
+.rs{display:none;margin-top:24px}
+.rs.on{display:block;animation:fadeUp 0.5s ease}
+.rshead{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:20px}
+.rstag{font-size:10px;letter-spacing:3px;color:var(--blue);text-transform:uppercase}
+.rsconf{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--blue)}
+.rsbody{background:#0c0c0c;border-left:2px solid var(--blue);padding:22px}
+.rsbody h4{font-size:10px;letter-spacing:3px;color:#333;text-transform:uppercase;margin-bottom:12px}
+.rstext{font-size:14px;line-height:1.75;font-weight:300;color:#ccc;white-space:pre-wrap}
+
+/* STATS */
+.stats{display:flex;width:100%;max-width:660px;border:1px solid var(--border);margin-top:40px;animation:fadeUp 0.8s ease 0.7s both}
+.st{flex:1;padding:26px 16px;text-align:center;border-right:1px solid var(--border);background:var(--gray);transition:background 0.3s}
+.st:last-child{border-right:none}
+.st:hover{background:var(--gray3)}
+.sn{font-family:'Bebas Neue',sans-serif;font-size:34px;color:var(--blue);letter-spacing:2px;line-height:1}
+.sl{font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-top:5px}
+
+/* FOOTER */
+footer{position:relative;z-index:10;border-top:1px solid var(--border);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.ft{font-size:10px;letter-spacing:2.5px;color:#2a2a2a;text-transform:uppercase}
+
+/* ANIMATIONS */
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){header{padding:16px 20px}h1{font-size:48px}.hero{padding:50px 20px 40px}.stats{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
-<header>
-  <div class="logo">X<span>CALIBER</span></div>
-  <div class="htag">AI Decision Intelligence</div>
-</header>
-
-<section class="hero">
-  <div class="btag">⚔ Civilization Intelligence Layer</div>
-  <h1>Don't Guess.<br><em>Decide.</em></h1>
-  <p class="sub">Type your business problem. XCALIBER thinks. You get one clear decision — with confidence, reasoning, and a plan.</p>
-
-  <div class="setup">
-    <div class="lbl">Claude API Key (stored in your browser only — never shared)</div>
-    <input type="password" id="apiKey" placeholder="sk-ant-api03-..." />
-  </div>
-
-  <div class="iarea">
-    <div class="iwrap">
-      <textarea id="problemInput" placeholder="Describe your business problem or decision challenge...&#10;&#10;Example: Should I expand to Dubai or grow locally first?" maxlength="1000"></textarea>
-      <div class="cc"><span id="charCount">0</span>/1000</div>
-    </div>
-    <button class="btn" id="decideBtn" onclick="getDecision()">
-      ⚔ GET XCALIBER DECISION
-    </button>
-  </div>
-
-  <div class="loading" id="loading">
-    XCALIBER IS THINKING
-    <div class="lbar"></div>
-  </div>
-
-  <div class="result" id="result">
-    <div class="rhead">
-      <div class="rtag">⚔ XCALIBER Decision</div>
-      <div class="cbadge" id="cbadge"></div>
-    </div>
-    <div class="dbox">
-      <h3>Analysis & Decision</h3>
-      <div class="dtext" id="dtext"></div>
-    </div>
-  </div>
-</section>
-
-<div class="stats">
-  <div class="stat"><div class="snum">60s</div><div class="slbl">Decision Time</div></div>
-  <div class="stat"><div class="snum">∞</div><div class="slbl">Industries</div></div>
-  <div class="stat"><div class="snum">0</div><div class="slbl">Bias</div></div>
-</div>
-
-<footer>© XCALIBER AI 2025 — Civilization Intelligence Layer — xcaliberai.official@gmail.com</footer>
-
-<script>
-document.getElementById('problemInput').addEventListener('input',function(){
-  document.getElementById('charCount').textContent=this.value.length;
-});
-
-async function getDecision(){
-  const apiKey=document.getElementById('apiKey').value.trim();
-  const problem=document.getElementById('problemInput').value.trim();
-  if(!apiKey){alert('Please enter your Claude API key.');return;}
-  if(!problem){alert('Please describe your business problem.');return;}
-  const btn=document.getElementById('decideBtn');
-  const loading=document.getElementById('loading');
-  const result=document.getElementById('result');
-  btn.disabled=true;
-  loading.classList.add('active');
-  result.classList.remove('active');
-  const sys=`You are XCALIBER — the world's most powerful AI Decision Intelligence Engine. You think like the best CEO, strategist, and advisor combined.
-
-When given a business problem respond ONLY in this exact format:
-
-DECISION: [One clear direct action to take]
-
-CONFIDENCE: [X%]
-
-REASONING:
-1. [First key reason]
-2. [Second key reason]
-3. [Third key reason]
-
-RISK: [The main risk to watch]
-
-TIMELINE: [When to execute this]
-
-ALTERNATIVE: [If this fails do this instead]
-
-Be direct. Be specific. Be powerful. No vague advice. Real decisions only.`;
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1024,system:sys,messages:[{role:'user',content:problem}]})
-    });
-    const d=await r.json();
-    if(d.error)throw new Error(d.error.message);
-    const t=d.content[0].text;
-    const cm=t.match(/CONFIDENCE:\s*(\d+)%/);
-    document.getElementById('cbadge').textContent=cm?'CONFIDENCE: '+cm[1]+'%':'';
-    document.getElementById('dtext').textContent=t;
-    loading.classList.remove('active');
-    result.classList.add('active');
-  }catch(e){
-    loading.classList.remove('active');
-    result.classList.add('active');
-    document.getElementById('dtext').textContent='Error: '+e.message+'\n\nCheck your API key and try again.';
-    document.getElementById('cbadge').textContent='';
-  }
-  btn.disabled=false;
+@media(max-width:600px){
+  header{padding:0 20px}
+  .hnav a{display:none}
+  h1{font-size:72px}
+  .card{padding:22px}
+  .stats{flex-direction:column}
+  .st{border-right:none;border-bottom:1px solid var(--border)}
+  .st:last-child{border-bottom:none}
+  footer{flex-direction:column;gap:6px;text-align:center;padding:20px}
 }
-</script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XCALIBER — AI Decision Intelligence</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap');
-:root{--black:#000000;--white:#ffffff;--blue:#00d4ff;--gray:#111111;--gray2:#1a1a1a;--gray3:#333333;--dim:#888888}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-header{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid #111;position:sticky;top:0;background:rgba(0,0,0,0.97);backdrop-filter:blur(10px);z-index:100}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px}.logo span{color:var(--blue)}
-.htag{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase}
-.hero{text-align:center;padding:80px 40px 60px;position:relative}
-.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,212,255,0.06) 0%,transparent 70%);pointer-events:none}
-.btag{display:inline-block;font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;border:1px solid rgba(0,212,255,0.3);padding:6px 16px;margin-bottom:30px;animation:fadeIn 0.6s ease}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,96px);letter-spacing:6px;line-height:0.95;margin-bottom:20px;animation:fadeUp 0.6s ease 0.1s both}
-h1 em{font-style:normal;color:var(--blue)}
-.sub{font-size:16px;color:var(--dim);max-width:500px;margin:0 auto 40px;line-height:1.6;font-weight:300;animation:fadeUp 0.6s ease 0.2s both}
-.setup{max-width:700px;margin:0 auto 20px;animation:fadeUp 0.6s ease 0.25s both}
-.lbl{font-size:10px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:6px}
-input[type=password],input[type=text]{width:100%;background:var(--gray);border:1px solid var(--gray3);color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;padding:12px 16px;outline:none;transition:border-color 0.3s}
-input:focus{border-color:rgba(0,212,255,0.3)}
-input::placeholder{color:#333}
-.iarea{max-width:700px;margin:0 auto;animation:fadeUp 0.6s ease 0.3s both}
-.iwrap{position:relative;margin-bottom:16px}
-textarea{width:100%;background:var(--gray);border:1px solid var(--gray3);color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;padding:20px 24px;resize:none;height:140px;outline:none;transition:border-color 0.3s;line-height:1.6}
-textarea::placeholder{color:#444}
-textarea:focus{border-color:rgba(0,212,255,0.4)}
-.cc{position:absolute;bottom:12px;right:16px;font-size:11px;color:#333}
-.btn{width:100%;background:var(--white);color:var(--black);border:none;padding:18px 32px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:4px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:12px}
-.btn:hover{background:var(--blue);color:var(--black);transform:translateY(-1px)}
-.btn:disabled{background:#222;color:#444;cursor:not-allowed;transform:none}
-.loading{display:none;text-align:center;padding:40px;color:var(--dim);font-size:13px;letter-spacing:2px;text-transform:uppercase}
-.loading.active{display:block}
-.lbar{width:200px;height:1px;background:#111;margin:16px auto 0;position:relative;overflow:hidden}
-.lbar::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--blue);animation:load 1.5s infinite}
-@keyframes load{to{left:100%}}
-.result{display:none;max-width:700px;margin:40px auto 0;animation:fadeUp 0.5s ease}
-.result.active{display:block}
-.rhead{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #111}
-.rtag{font-size:10px;letter-spacing:3px;color:var(--blue);text-transform:uppercase}
-.cbadge{margin-left:auto;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue);letter-spacing:2px}
-.dbox{background:var(--gray);border-left:2px solid var(--blue);padding:24px 28px;margin-bottom:20px}
-.dbox h3{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:12px}
-.dtext{font-size:15px;line-height:1.7;color:var(--white);font-weight:300;white-space:pre-wrap}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#111;margin:60px auto 0;max-width:700px}
-.stat{background:var(--black);padding:24px;text-align:center}
-.snum{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--blue);letter-spacing:2px}
-.slbl{font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:4px}
-footer{text-align:center;padding:40px;margin-top:80px;border-top:1px solid #111;font-size:11px;letter-spacing:3px;color:#333;text-transform:uppercase}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){header{padding:16px 20px}h1{font-size:48px}.hero{padding:50px 20px 40px}.stats{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">X<span>CALIBER</span></div>
-  <div class="htag">AI Decision Intelligence</div>
-</header>
-
-<section class="hero">
-  <div class="btag">⚔ Civilization Intelligence Layer</div>
-  <h1>Don't Guess.<br><em>Decide.</em></h1>
-  <p class="sub">Type your business problem. XCALIBER thinks. You get one clear decision — with confidence, reasoning, and a plan.</p>
-
-  <div class="setup">
-    <div class="lbl">Claude API Key (stored in your browser only — never shared)</div>
-    <input type="password" id="apiKey" placeholder="sk-ant-api03-..." />
-  </div>
-
-  <div class="iarea">
-    <div class="iwrap">
-      <textarea id="problemInput" placeholder="Describe your business problem or decision challenge...&#10;&#10;Example: Should I expand to Dubai or grow locally first?" maxlength="1000"></textarea>
-      <div class="cc"><span id="charCount">0</span>/1000</div>
-    </div>
-    <button class="btn" id="decideBtn" onclick="getDecision()">
-      ⚔ GET XCALIBER DECISION
-    </button>
-  </div>
-
-  <div class="loading" id="loading">
-    XCALIBER IS THINKING
-    <div class="lbar"></div>
-  </div>
-
-  <div class="result" id="result">
-    <div class="rhead">
-      <div class="rtag">⚔ XCALIBER Decision</div>
-      <div class="cbadge" id="cbadge"></div>
-    </div>
-    <div class="dbox">
-      <h3>Analysis & Decision</h3>
-      <div class="dtext" id="dtext"></div>
-    </div>
-  </div>
-</section>
-
-<div class="stats">
-  <div class="stat"><div class="snum">60s</div><div class="slbl">Decision Time</div></div>
-  <div class="stat"><div class="snum">∞</div><div class="slbl">Industries</div></div>
-  <div class="stat"><div class="snum">0</div><div class="slbl">Bias</div></div>
+<div class="bg"></div>
+<div class="grid-bg"></div>
+<div class="pts">
+  <div class="pt"></div><div class="pt"></div><div class="pt"></div>
+  <div class="pt"></div><div class="pt"></div><div class="pt"></div>
+  <div class="pt"></div><div class="pt"></div><div class="pt"></div>
 </div>
 
-<footer>© XCALIBER AI 2025 — Civilization Intelligence Layer — xcaliberai.official@gmail.com</footer>
+<header>
+  <a href="#" class="logo">X<b>CALIBER</b></a>
+  <nav class="hnav">
+    <a href="#">Platform</a>
+    <a href="#">Enterprise</a>
+    <a href="mailto:xcaliberai.official@gmail.com">Contact</a>
+    <div class="hpill">Live</div>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="eyebrow">⚔ &nbsp; Civilization Intelligence Layer &nbsp; ⚔</div>
+    <h1>Don't Guess.<br><span class="ac">Decide.</span></h1>
+    <p class="sub">Type your business problem. XCALIBER thinks. You get one clear decision — with confidence, reasoning, and a plan.</p>
+  </div>
+
+  <div class="card">
+    <div class="flabel">Claude API Key — stored in your browser only</div>
+    <input type="password" id="apiKey" placeholder="sk-ant-api03-..." autocomplete="off"/>
+
+    <div class="sep"></div>
+
+    <div class="flabel">Your Business Problem or Decision Challenge</div>
+    <div class="twrap">
+      <textarea id="prob" maxlength="1000" placeholder="Describe your business challenge in detail...&#10;&#10;Example: I run a clothing brand in India with ₹10L monthly revenue. Should I expand to Dubai now or grow locally for 6 more months?"></textarea>
+      <div class="cc"><span id="cc">0</span>/1000</div>
+    </div>
+
+    <button class="btn" id="btn" onclick="go()">⚔ &nbsp; GET XCALIBER DECISION</button>
+
+    <div class="ld" id="ld">
+      <div class="ldtxt">XCALIBER Intelligence Engine Processing</div>
+      <div class="lbar"></div>
+    </div>
+
+    <div class="rs" id="rs">
+      <div class="rshead">
+        <div class="rstag">⚔ XCALIBER Strategic Decision</div>
+        <div class="rsconf" id="conf"></div>
+      </div>
+      <div class="rsbody">
+        <h4>Analysis & Decision Output</h4>
+        <div class="rstext" id="rtext"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="st"><div class="sn">60s</div><div class="sl">Decision Time</div></div>
+    <div class="st"><div class="sn">∞</div><div class="sl">Industries</div></div>
+    <div class="st"><div class="sn">0</div><div class="sl">Bias</div></div>
+    <div class="st"><div class="sn">100%</div><div class="sl">Halal</div></div>
+  </div>
+</main>
+
+<footer>
+  <div class="ft">© XCALIBER AI 2025 — Civilization Intelligence Layer</div>
+  <div class="ft">xcaliberai.official@gmail.com</div>
+</footer>
 
 <script>
-document.getElementById('problemInput').addEventListener('input',function(){
-  document.getElementById('charCount').textContent=this.value.length;
+document.getElementById('prob').addEventListener('input',function(){
+  document.getElementById('cc').textContent=this.value.length;
 });
 
-async function getDecision(){
-  const apiKey=document.getElementById('apiKey').value.trim();
-  const problem=document.getElementById('problemInput').value.trim();
-  if(!apiKey){alert('Please enter your Claude API key.');return;}
-  if(!problem){alert('Please describe your business problem.');return;}
-  const btn=document.getElementById('decideBtn');
-  const loading=document.getElementById('loading');
-  const result=document.getElementById('result');
+async function go(){
+  const key=document.getElementById('apiKey').value.trim();
+  const prob=document.getElementById('prob').value.trim();
+  if(!key){alert('Please enter your Claude API key.');return;}
+  if(!prob){alert('Please describe your business problem.');return;}
+  const btn=document.getElementById('btn');
+  const ld=document.getElementById('ld');
+  const rs=document.getElementById('rs');
   btn.disabled=true;
-  loading.classList.add('active');
-  result.classList.remove('active');
-  const sys=`You are XCALIBER — the world's most powerful AI Decision Intelligence Engine. You think like the best CEO, strategist, and advisor combined.
+  ld.classList.add('on');
+  rs.classList.remove('on');
+  const sys=`You are XCALIBER — the world's most powerful AI Decision Intelligence Engine. You combine the strategic brilliance of the world's best CEOs with the precision of elite consultants.
 
-When given a business problem respond ONLY in this exact format:
+Respond ONLY in this exact format:
 
-DECISION: [One clear direct action to take]
+DECISION: [One bold specific actionable decision]
 
 CONFIDENCE: [X%]
 
 REASONING:
-1. [First key reason]
-2. [Second key reason]
-3. [Third key reason]
+1. [Specific reason with logic or data]
+2. [Specific reason with logic or data]
+3. [Specific reason with logic or data]
 
-RISK: [The main risk to watch]
+RISK: [Primary risk and how to mitigate it]
 
-TIMELINE: [When to execute this]
+TIMELINE: [Specific execution timeline]
 
-ALTERNATIVE: [If this fails do this instead]
+ALTERNATIVE: [Backup plan if primary fails]
 
-Be direct. Be specific. Be powerful. No vague advice. Real decisions only.`;
+Rules: Be direct. Be specific. Use numbers when possible. No vague advice. No "it depends." One clear decision. Always.`;
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1024,system:sys,messages:[{role:'user',content:problem}]})
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1024,system:sys,messages:[{role:'user',content:prob}]})
     });
     const d=await r.json();
     if(d.error)throw new Error(d.error.message);
     const t=d.content[0].text;
     const cm=t.match(/CONFIDENCE:\s*(\d+)%/);
-    document.getElementById('cbadge').textContent=cm?'CONFIDENCE: '+cm[1]+'%':'';
-    document.getElementById('dtext').textContent=t;
-    loading.classList.remove('active');
-    result.classList.add('active');
+    document.getElementById('conf').textContent=cm?cm[1]+'% CONFIDENCE':'';
+    document.getElementById('rtext').textContent=t;
+    ld.classList.remove('on');
+    rs.classList.add('on');
   }catch(e){
-    loading.classList.remove('active');<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XCALIBER — AI Decision Intelligence</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap');
-:root{--black:#000000;--white:#ffffff;--blue:#00d4ff;--gray:#111111;--gray2:#1a1a1a;--gray3:#333333;--dim:#888888}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-header{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid #111;position:sticky;top:0;background:rgba(0,0,0,0.97);backdrop-filter:blur(10px);z-index:100}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px}.logo span{color:var(--blue)}
-.htag{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase}
-.hero{text-align:center;padding:80px 40px 60px;position:relative}
-.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,212,255,0.06) 0%,transparent 70%);pointer-events:none}
-.btag{display:inline-block;font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;border:1px solid rgba(0,212,255,0.3);padding:6px 16px;margin-bottom:30px;animation:fadeIn 0.6s ease}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,96px);letter-spacing:6px;line-height:0.95;margin-bottom:20px;animation:fadeUp 0.6s ease 0.1s both}
-h1 em{font-style:normal;color:var(--blue)}
-.sub{font-size:16px;color:var(--dim);max-width:500px;margin:0 auto 40px;line-height:1.6;font-weight:300;animation:fadeUp 0.6s ease 0.2s both}
-.setup{max-width:700px;margin:0 auto 20px;animation:fadeUp 0.6s ease 0.25s both}
-.lbl{font-size:10px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:6px}
-input[type=password],input[type=text]{width:100%;background:var(--gray);border:1px solid var(--gray3);color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;padding:12px 16px;outline:none;transition:border-color 0.3s}
-input:focus{border-color:rgba(0,212,255,0.3)}
-input::placeholder{color:#333}
-.iarea{max-width:700px;margin:0 auto;animation:fadeUp 0.6s ease 0.3s both}
-.iwrap{position:relative;margin-bottom:16px}
-textarea{width:100%;background:var(--gray);border:1px solid var(--gray3);color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;padding:20px 24px;resize:none;height:140px;outline:none;transition:border-color 0.3s;line-height:1.6}
-textarea::placeholder{color:#444}
-textarea:focus{border-color:rgba(0,212,255,0.4)}
-.cc{position:absolute;bottom:12px;right:16px;font-size:11px;color:#333}
-.btn{width:100%;background:var(--white);color:var(--black);border:none;padding:18px 32px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:4px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:12px}
-.btn:hover{background:var(--blue);color:var(--black);transform:translateY(-1px)}
-.btn:disabled{background:#222;color:#444;cursor:not-allowed;transform:none}
-.loading{display:none;text-align:center;padding:40px;color:var(--dim);font-size:13px;letter-spacing:2px;text-transform:uppercase}
-.loading.active{display:block}
-.lbar{width:200px;height:1px;background:#111;margin:16px auto 0;position:relative;overflow:hidden}
-.lbar::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--blue);animation:load 1.5s infinite}
-@keyframes load{to{left:100%}}
-.result{display:none;max-width:700px;margin:40px auto 0;animation:fadeUp 0.5s ease}
-.result.active{display:block}
-.rhead{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #111}
-.rtag{font-size:10px;letter-spacing:3px;color:var(--blue);text-transform:uppercase}
-.cbadge{margin-left:auto;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue);letter-spacing:2px}
-.dbox{background:var(--gray);border-left:2px solid var(--blue);padding:24px 28px;margin-bottom:20px}
-.dbox h3{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:12px}
-.dtext{font-size:15px;line-height:1.7;color:var(--white);font-weight:300;white-space:pre-wrap}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#111;margin:60px auto 0;max-width:700px}
-.stat{background:var(--black);padding:24px;text-align:center}
-.snum{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--blue);letter-spacing:2px}
-.slbl{font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:4px}
-footer{text-align:center;padding:40px;margin-top:80px;border-top:1px solid #111;font-size:11px;letter-spacing:3px;color:#333;text-transform:uppercase}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){header{padding:16px 20px}h1{font-size:48px}.hero{padding:50px 20px 40px}.stats{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-
-<header>
-  <div class="logo">X<span>CALIBER</span></div>
-  <div class="htag">AI Decision Intelligence</div>
-</header>
-
-<section class="hero">
-  <div class="btag">⚔ Civilization Intelligence Layer</div>
-  <h1>Don't Guess.<br><em>Decide.</em></h1>
-  <p class="sub">Type your business problem. XCALIBER thinks. You get one clear decision — with confidence, reasoning, and a plan.</p>
-
-  <div class="setup">
-    <div class="lbl">Claude API Key (stored in your browser only — never shared)</div>
-    <input type="password" id="apiKey" placeholder="sk-ant-api03-..." />
-  </div>
-
-  <div class="iarea">
-    <div class="iwrap">
-      <textarea id="problemInput" placeholder="Describe your business problem or decision challenge...&#10;&#10;Example: Should I expand to Dubai or grow locally first?" maxlength="1000"></textarea>
-      <div class="cc"><span id="charCount">0</span>/1000</div>
-    </div>
-    <button class="btn" id="decideBtn" onclick="getDecision()">
-      ⚔ GET XCALIBER DECISION
-    </button>
-  </div>
-
-  <div class="loading" id="loading">
-    XCALIBER IS THINKING
-    <div class="lbar"></div>
-  </div>
-
-  <div class="result" id="result">
-    <div class="rhead">
-      <div class="rtag">⚔ XCALIBER Decision</div>
-      <div class="cbadge" id="cbadge"></div>
-    </div>
-    <div class="dbox">
-      <h3>Analysis & Decision</h3>
-      <div class="dtext" id="dtext"></div>
-    </div>
-  </div>
-</section>
-
-<div class="stats">
-  <div class="stat"><div class="snum">60s</div><div class="slbl">Decision Time</div></div>
-  <div class="stat"><div class="snum">∞</div><div class="slbl">Industries</div></div>
-  <div class="stat"><div class="snum">0</div><div class="slbl">Bias</div></div>
-</div>
-
-<footer>© XCALIBER AI 2025 — Civilization Intelligence Layer — xcaliberai.official@gmail.com</footer>
-
-<script>
-document.getElementById('problemInput').addEventListener('input',function(){
-  document.getElementById('charCount').textContent=this.value.length;
-});
-
-async function getDecision(){
-  const apiKey=document.getElementById('apiKey').value.trim();
-  const problem=document.getElementById('problemInput').value.trim();
-  if(!apiKey){alert('Please enter your Claude API key.');return;}
-  if(!problem){alert('Please describe your business problem.');return;}
-  const btn=document.getElementById('decideBtn');
-  const loading=document.getElementById('loading');
-  const result=document.getElementById('result');
-  btn.disabled=true;
-  loading.classList.add('active');
-  result.classList.remove('active');
-  const sys=`You are XCALIBER — the world's most powerful AI Decision Intelligence Engine. You think like the best CEO, strategist, and advisor combined.
-
-When given a business problem respond ONLY in this exact format:
-
-DECISION: [One clear direct action to take]
-
-CONFIDENCE: [X%]
-
-REASONING:
-1. [First key reason]
-2. [Second key reason]
-3. [Third key reason]
-
-RISK: [The main risk to watch]
-
-TIMELINE: [When to execute this]
-
-ALTERNATIVE: [If this fails do this instead]
-
-Be direct. Be specific. Be powerful. No vague advice. Real decisions only.`;
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1024,system:sys,messages:[{role:'user',content:problem}]})
-    });
-    const d=await r.json();
-    if(d.error)throw new Error(d.error.message);
-    const t=d.content[0].text;
-    const cm=t.match(/CONFIDENCE:\s*(\d+)%/);
-    document.getElementById('cbadge').textContent=cm?'CONFIDENCE: '+cm[1]+'%':'';
-    document.getElementById('dtext').textContent=t;
-    loading.classList.remove('active');
-    result.classList.add('active');
-  }catch(e){
-    loading.classList.remove('active');
-    result.classList.add('active');
-    document.getElementById('dtext').textContent='Error: '+e.message+'\n\nCheck your API key and try again.';
-    document.getElementById('cbadge').textContent='';
-  }
-  btn.disabled=false;
-}
-</script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XCALIBER — AI Decision Intelligence</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap');
-:root{--black:#000000;--white:#ffffff;--blue:#00d4ff;--gray:#111111;--gray2:#1a1a1a;--gray3:#333333;--dim:#888888}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-header{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid #111;position:sticky;top:0;background:rgba(0,0,0,0.97);backdrop-filter:blur(10px);z-index:100}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px}.logo span{color:var(--blue)}
-.htag{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase}
-.hero{text-align:center;padding:80px 40px 60px;position:relative}
-.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,212,255,0.06) 0%,transparent 70%);pointer-events:none}
-.btag{display:inline-block;font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;border:1px solid rgba(0,212,255,0.3);padding:6px 16px;margin-bottom:30px;animation:fadeIn 0.6s ease}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,96px);letter-spacing:6px;line-height:0.95;margin-bottom:20px;animation:fadeUp 0.6s ease 0.1s both}
-h1 em{font-style:normal;color:var(--blue)}
-.sub{font-size:16px;color:var(--dim);max-width:500px;margin:0 auto 40px;line-height:1.6;font-weight:300;animation:fadeUp 0.6s ease 0.2s both}
-.setup{max-width:700px;margin:0 auto 20px;animation:fadeUp 0.6s ease 0.25s both}
-.lbl{font-size:10px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:6px}
-input[type=password],input[type=text]{width:100%;background:var(--gray);border:1px solid var(--gray3);color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;padding:12px 16px;outline:none;transition:border-color 0.3s}
-input:focus{border-color:rgba(0,212,255,0.3)}
-input::placeholder{color:#333}
-.iarea{max-width:700px;margin:0 auto;animation:fadeUp 0.6s ease 0.3s both}
-.iwrap{position:relative;margin-bottom:16px}
-textarea{width:100%;background:var(--gray);border:1px solid var(--gray3);color:var(--white);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;padding:20px 24px;resize:none;height:140px;outline:none;transition:border-color 0.3s;line-height:1.6}
-textarea::placeholder{color:#444}
-textarea:focus{border-color:rgba(0,212,255,0.4)}
-.cc{position:absolute;bottom:12px;right:16px;font-size:11px;color:#333}
-.btn{width:100%;background:var(--white);color:var(--black);border:none;padding:18px 32px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:4px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:12px}
-.btn:hover{background:var(--blue);color:var(--black);transform:translateY(-1px)}
-.btn:disabled{background:#222;color:#444;cursor:not-allowed;transform:none}
-.loading{display:none;text-align:center;padding:40px;color:var(--dim);font-size:13px;letter-spacing:2px;text-transform:uppercase}
-.loading.active{display:block}
-.lbar{width:200px;height:1px;background:#111;margin:16px auto 0;position:relative;overflow:hidden}
-.lbar::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--blue);animation:load 1.5s infinite}
-@keyframes load{to{left:100%}}
-.result{display:none;max-width:700px;margin:40px auto 0;animation:fadeUp 0.5s ease}
-.result.active{display:block}
-.rhead{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #111}
-.rtag{font-size:10px;letter-spacing:3px;color:var(--blue);text-transform:uppercase}
-.cbadge{margin-left:auto;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue);letter-spacing:2px}
-.dbox{background:var(--gray);border-left:2px solid var(--blue);padding:24px 28px;margin-bottom:20px}
-.dbox h3{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:12px}
-.dtext{font-size:15px;line-height:1.7;color:var(--white);font-weight:300;white-space:pre-wrap}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#111;margin:60px auto 0;max-width:700px}
-.stat{background:var(--black);padding:24px;text-align:center}
-.snum{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--blue);letter-spacing:2px}
-.slbl{font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:4px}
-footer{text-align:center;padding:40px;margin-top:80px;border-top:1px solid #111;font-size:11px;letter-spacing:3px;color:#333;text-transform:uppercase}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){header{padding:16px 20px}h1{font-size:48px}.hero{padding:50px 20px 40px}.stats{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-
-<header>
-  <div class="logo">X<span>CALIBER</span></div>
-  <div class="htag">AI Decision Intelligence</div>
-</header>
-
-<section class="hero">
-  <div class="btag">⚔ Civilization Intelligence Layer</div>
-  <h1>Don't Guess.<br><em>Decide.</em></h1>
-  <p class="sub">Type your business problem. XCALIBER thinks. You get one clear decision — with confidence, reasoning, and a plan.</p>
-
-  <div class="setup">
-    <div class="lbl">Claude API Key (stored in your browser only — never shared)</div>
-    <input type="password" id="apiKey" placeholder="sk-ant-api03-..." />
-  </div>
-
-  <div class="iarea">
-    <div class="iwrap">
-      <textarea id="problemInput" placeholder="Describe your business problem or decision challenge...&#10;&#10;Example: Should I expand to Dubai or grow locally first?" maxlength="1000"></textarea>
-      <div class="cc"><span id="charCount">0</span>/1000</div>
-    </div>
-    <button class="btn" id="decideBtn" onclick="getDecision()">
-      ⚔ GET XCALIBER DECISION
-    </button>
-  </div>
-
-  <div class="loading" id="loading">
-    XCALIBER IS THINKING
-    <div class="lbar"></div>
-  </div>
-
-  <div class="result" id="result">
-    <div class="rhead">
-      <div class="rtag">⚔ XCALIBER Decision</div>
-      <div class="cbadge" id="cbadge"></div>
-    </div>
-    <div class="dbox">
-      <h3>Analysis & Decision</h3>
-      <div class="dtext" id="dtext"></div>
-    </div>
-  </div>
-</section>
-
-<div class="stats">
-  <div class="stat"><div class="snum">60s</div><div class="slbl">Decision Time</div></div>
-  <div class="stat"><div class="snum">∞</div><div class="slbl">Industries</div></div>
-  <div class="stat"><div class="snum">0</div><div class="slbl">Bias</div></div>
-</div>
-
-<footer>© XCALIBER AI 2025 — Civilization Intelligence Layer — xcaliberai.official@gmail.com</footer>
-
-<script>
-document.getElementById('problemInput').addEventListener('input',function(){
-  document.getElementById('charCount').textContent=this.value.length;
-});
-
-async function getDecision(){
-  const apiKey=document.getElementById('apiKey').value.trim();
-  const problem=document.getElementById('problemInput').value.trim();
-  if(!apiKey){alert('Please enter your Claude API key.');return;}
-  if(!problem){alert('Please describe your business problem.');return;}
-  const btn=document.getElementById('decideBtn');
-  const loading=document.getElementById('loading');
-  const result=document.getElementById('result');
-  btn.disabled=true;
-  loading.classList.add('active');
-  result.classList.remove('active');
-  const sys=`You are XCALIBER — the world's most powerful AI Decision Intelligence Engine. You think like the best CEO, strategist, and advisor combined.
-
-When given a business problem respond ONLY in this exact format:
-
-DECISION: [One clear direct action to take]
-
-CONFIDENCE: [X%]
-
-REASONING:
-1. [First key reason]
-2. [Second key reason]
-3. [Third key reason]
-
-RISK: [The main risk to watch]
-
-TIMELINE: [When to execute this]
-
-ALTERNATIVE: [If this fails do this instead]
-
-Be direct. Be specific. Be powerful. No vague advice. Real decisions only.`;
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1024,system:sys,messages:[{role:'user',content:problem}]})
-    });
-    const d=await r.json();
-    if(d.error)throw new Error(d.error.message);
-    const t=d.content[0].text;
-    const cm=t.match(/CONFIDENCE:\s*(\d+)%/);
-    document.getElementById('cbadge').textContent=cm?'CONFIDENCE: '+cm[1]+'%':'';
-    document.getElementById('dtext').textContent=t;
-    loading.classList.remove('active');
-    result.classList.add('active');
-  }catch(e){
-    loading.classList.remove('active');
-    result.classList.add('active');
-    document.getElementById('dtext').textContent='Error: '+e.message+'\n\nCheck your API key and try again.';
-    document.getElementById('cbadge').textContent='';
-  }
-  btn.disabled=false;
-}
-</script>
-</body>
-</html>
-    result.classList.add('active');
-    document.getElementById('dtext').textContent='Error: '+e.message+'\n\nCheck your API key and try again.';
-    document.getElementById('cbadge').textContent='';
+    ld.classList.remove('on');
+    rs.classList.add('on');
+    document.getElementById('rtext').textContent='Error: '+e.message+'\n\nCheck your API key and try again.';
+    document.getElementById('conf').textContent='';
   }
   btn.disabled=false;
 }
