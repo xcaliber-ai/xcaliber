@@ -3,603 +3,741 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XCALIBER — AI Decision Intelligence Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- Google Analytics -->
+<title>XCALIBER — AI Decision Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMJQ6KJLV9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MMJQ6KJLV9');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MMJQ6KJLV9');</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --black:#000;--white:#fff;
-  --blue:#00d4ff;--blue2:rgba(0,212,255,0.12);--blue3:rgba(0,212,255,0.04);
-  --green:#00ff88;
-  --g1:#0a0a0a;--g2:#111;--g3:#161616;--g4:#1f1f1f;--g5:#2a2a2a;
-  --dim:#666;--dim2:#444;--dim3:#2a2a2a;
-  --border:#1e1e1e;--border2:#2a2a2a;
+  --navy:#050b18;
+  --navy2:#080f1f;
+  --navy3:#0d1629;
+  --navy4:#111e36;
+  --blue:#1a6ff5;
+  --blue2:#2d7fff;
+  --blue3:rgba(26,111,245,0.15);
+  --blue4:rgba(26,111,245,0.06);
+  --cyan:#00d4ff;
+  --white:#ffffff;
+  --white2:#e8edf5;
+  --white3:#b0bdd0;
+  --dim:#6b7a94;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.12);
+  --card:rgba(13,22,41,0.8);
 }
 html{scroll-behavior:smooth}
-body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;line-height:1.6}
+body{background:var(--navy);color:var(--white);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden;line-height:1.6}
 
-/* BG */
-.bg-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:orb-f ease-in-out infinite}
-.orb-1{width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,0.06),transparent 70%);top:-200px;left:50%;transform:translateX(-50%);animation-duration:12s}
-.orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(124,58,237,0.04),transparent 70%);bottom:10%;right:-100px;animation-duration:18s;animation-delay:3s}
-@keyframes orb-f{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.15)}}
-.grid-bg{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.018) 1px,transparent 1px);background-size:64px 64px;pointer-events:none}
-.pts{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.p{position:absolute;width:1.5px;height:1.5px;background:var(--blue);border-radius:50%;opacity:0;animation:rise linear infinite}
-.p:nth-child(1){left:8%;animation-duration:20s;animation-delay:0s}
-.p:nth-child(2){left:20%;animation-duration:25s;animation-delay:4s}
-.p:nth-child(3){left:35%;animation-duration:18s;animation-delay:8s}
-.p:nth-child(4){left:50%;animation-duration:28s;animation-delay:2s}
-.p:nth-child(5){left:65%;animation-duration:22s;animation-delay:6s}
-.p:nth-child(6){left:78%;animation-duration:30s;animation-delay:11s}
-.p:nth-child(7){left:90%;animation-duration:17s;animation-delay:3s}
-@keyframes rise{0%{bottom:-5px;opacity:0}10%{opacity:.8}90%{opacity:.15}100%{bottom:105%;opacity:0}}
+/* NOISE TEXTURE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+
+/* BG GRADIENT */
+.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none}
+.bg-mesh::before{content:'';position:absolute;width:800px;height:800px;background:radial-gradient(circle,rgba(26,111,245,0.12) 0%,transparent 65%);top:-200px;left:50%;transform:translateX(-50%);animation:pulse 15s ease-in-out infinite}
+.bg-mesh::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,0.06) 0%,transparent 65%);bottom:10%;right:-100px;animation:pulse 20s ease-in-out infinite reverse}
+@keyframes pulse{0%,100%{transform:translateX(-50%) scale(1);opacity:1}50%{transform:translateX(-50%) scale(1.2);opacity:.6}}
 
 /* HEADER */
-header{position:fixed;top:0;left:0;right:0;z-index:999;height:60px;display:flex;align-items:center;padding:0 24px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.96);backdrop-filter:blur(20px);gap:20px}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:6px;color:var(--white);cursor:pointer;flex-shrink:0}
-.logo span{color:var(--blue)}
-nav{display:flex;align-items:center;gap:2px;flex:1;overflow-x:auto}
-nav::-webkit-scrollbar{display:none}
-.nb{font-size:12px;font-weight:500;color:var(--dim);padding:6px 12px;cursor:pointer;border:none;background:none;color:var(--dim);transition:all .2s;white-space:nowrap;border-radius:2px}
-.nb:hover,.nb.active{color:var(--white);background:var(--g3)}
-.hright{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
-.live-badge{font-size:10px;letter-spacing:2px;color:var(--blue);border:1px solid rgba(0,212,255,.2);padding:4px 10px;background:var(--blue3);display:flex;align-items:center;gap:5px}
-.live-badge::before{content:'';width:5px;height:5px;background:var(--blue);border-radius:50%;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
-.hbtn{font-size:11px;font-weight:500;padding:7px 14px;border:1px solid var(--border2);background:var(--g3);color:var(--white);cursor:pointer;transition:all .2s}
-.hbtn:hover{border-color:rgba(0,212,255,.4);color:var(--blue)}
-.hbtn.cta{background:var(--white);color:var(--black);border-color:var(--white)}
-.hbtn.cta:hover{background:var(--blue);border-color:var(--blue)}
+header{position:fixed;top:0;left:0;right:0;z-index:999;height:70px;display:flex;align-items:center;padding:0 32px;background:rgba(5,11,24,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:5px;color:var(--white);cursor:pointer;flex-shrink:0;text-decoration:none}
+.logo span{color:var(--blue2)}
+nav{display:flex;align-items:center;gap:2px;margin:0 32px;flex:1}
+.nb{font-size:13px;font-weight:500;color:var(--white3);padding:7px 14px;cursor:pointer;border:none;background:none;transition:color .2s;white-space:nowrap;border-radius:6px}
+.nb:hover,.nb.active{color:var(--white);background:rgba(255,255,255,.06)}
+.hright{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0}
+.hbtn{font-size:13px;font-weight:500;padding:8px 18px;border:1px solid var(--border2);background:transparent;color:var(--white);cursor:pointer;transition:all .2s;border-radius:6px}
+.hbtn:hover{background:rgba(255,255,255,.08)}
+.hbtn.cta{background:var(--blue);border-color:var(--blue);color:var(--white)}
+.hbtn.cta:hover{background:var(--blue2);border-color:var(--blue2)}
+.live-dot{display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:1px;color:var(--cyan);font-weight:500}
+.live-dot::before{content:'';width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:blink 2s infinite;box-shadow:0 0 6px var(--cyan)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* PAGES */
-.app{position:relative;z-index:10;min-height:100vh;padding-top:60px}
-.page{display:none;min-height:calc(100vh - 60px)}
-.page.active{display:block;animation:fadeIn .3s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.page-wrap{padding:40px 24px;max-width:900px;margin:0 auto}
-.page-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px;margin-bottom:6px}
-.page-sub{font-size:14px;color:var(--dim);font-weight:300;margin-bottom:32px}
+/* APP */
+.app{position:relative;z-index:10;padding-top:70px;min-height:100vh}
+.page{display:none;min-height:calc(100vh - 70px)}
+.page.active{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* DECIDE PAGE */
-.decide-center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;min-height:calc(100vh - 60px)}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;border:1px solid rgba(0,212,255,.2);padding:6px 18px;margin-bottom:28px;background:var(--blue3)}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,9vw,108px);letter-spacing:3px;line-height:.88;margin-bottom:20px;text-align:center}
-.hero-title .ac{color:var(--blue)}
-.hero-sub{font-size:16px;color:var(--dim);line-height:1.7;font-weight:300;text-align:center;max-width:460px;margin-bottom:40px}
+/* ══ HERO PAGE ══ */
+.hero-page{display:flex;flex-direction:column}
 
-/* MAIN CARD */
-.card{width:100%;max-width:700px;background:var(--g1);border:1px solid var(--border);position:relative}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);opacity:.5}
-.card-head{display:flex;align-items:center;gap:10px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--g3)}
-.card-title{font-size:11px;letter-spacing:3px;font-weight:600;text-transform:uppercase}
-.card-body{padding:24px}
+/* HERO SECTION */
+.hero-section{min-height:85vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative}
+.hero-section::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent)}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;border:1px solid rgba(0,212,255,.2);padding:8px 20px;border-radius:100px;margin-bottom:40px;background:rgba(0,212,255,.05);animation:fadeIn .8s ease both}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,12vw,130px);letter-spacing:2px;line-height:.88;margin-bottom:28px;animation:fadeIn .8s ease .15s both}
+.hero-h1 .grad{background:linear-gradient(135deg,var(--white) 0%,var(--blue2) 60%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:18px;color:var(--white3);line-height:1.7;font-weight:300;max-width:520px;margin:0 auto 48px;animation:fadeIn .8s ease .3s both}
+.hero-cta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;animation:fadeIn .8s ease .45s both}
+.btn-primary{font-size:15px;font-weight:600;padding:14px 32px;background:var(--blue);color:var(--white);border:none;border-radius:8px;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,111,245,.4)}
+.btn-ghost{font-size:15px;font-weight:500;padding:14px 32px;background:transparent;color:var(--white);border:1px solid var(--border2);border-radius:8px;cursor:pointer;transition:all .25s}
+.btn-ghost:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2)}
 
-/* FREE TRIAL BANNER */
-.trial-banner{background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,212,255,0.03));border:1px solid rgba(0,212,255,.2);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.trial-text{font-size:13px;color:var(--white);font-weight:400}
-.trial-text span{color:var(--blue);font-weight:600}
-.trial-count{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--blue);letter-spacing:2px;flex-shrink:0}
+/* STATS ROW */
+.stats-row{display:flex;justify-content:center;gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(8,15,31,.6)}
+.stat-item{flex:1;max-width:200px;padding:28px 20px;text-align:center;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--blue2);letter-spacing:2px;line-height:1}
+.stat-label{font-size:11px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:4px;font-weight:500}
+
+/* HOW IT WORKS */
+.section{padding:100px 24px;max-width:1100px;margin:0 auto}
+.section-tag{font-size:11px;letter-spacing:3px;color:var(--blue2);text-transform:uppercase;font-weight:600;margin-bottom:16px}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,72px);letter-spacing:2px;line-height:.95;margin-bottom:16px}
+.section-sub{font-size:16px;color:var(--white3);font-weight:300;line-height:1.7;max-width:520px}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border);margin-top:56px}
+.step{background:var(--navy2);padding:36px;transition:background .3s;position:relative;overflow:hidden}
+.step:hover{background:var(--navy3)}
+.step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.step:hover::before{transform:scaleX(1)}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:60px;color:rgba(26,111,245,.15);line-height:1;margin-bottom:16px;letter-spacing:2px}
+.step-title{font-size:18px;font-weight:600;margin-bottom:10px}
+.step-desc{font-size:14px;color:var(--white3);line-height:1.7;font-weight:300}
+
+/* DECISION CARD */
+.decide-section{padding:60px 24px 100px}
+.decide-inner{max-width:800px;margin:0 auto}
+.d-card{background:var(--navy2);border:1px solid var(--border2);border-radius:12px;overflow:hidden;position:relative}
+.d-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.d-head{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--navy3)}
+.d-dot{width:8px;height:8px;background:var(--cyan);border-radius:50%;animation:blink 2s infinite}
+.d-title{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--white2)}
+.d-counter{margin-left:auto;font-size:12px;color:var(--cyan);font-weight:600;letter-spacing:1px}
+.d-body{padding:28px}
+
+/* TRIAL BANNER */
+.trial-banner{background:linear-gradient(135deg,rgba(26,111,245,.1),rgba(0,212,255,.06));border:1px solid rgba(26,111,245,.25);border-radius:8px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.trial-text{font-size:14px;color:var(--white2);font-weight:400}
+.trial-text span{color:var(--blue2);font-weight:600}
+.trial-num{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--blue2);letter-spacing:2px}
 
 /* FORM */
-.flabel{font-size:10px;letter-spacing:2.5px;color:var(--dim2);text-transform:uppercase;margin-bottom:7px;font-weight:500}
-.frow{display:flex;gap:10px;margin-bottom:18px}
+.flabel{font-size:11px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:8px;font-weight:600}
+.fg{margin-bottom:20px}
+.frow{display:flex;gap:12px;margin-bottom:20px}
 .frow .fg{flex:1;margin-bottom:0}
-.fg{margin-bottom:18px}
-select.fi,input.fi{width:100%;background:#0d0d0d;border:1px solid var(--border);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;font-weight:300;padding:11px 14px;outline:none;transition:border-color .25s,box-shadow .25s;appearance:none}
-select.fi{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
-select.fi option{background:var(--g2)}
-input.fi:focus,select.fi:focus{border-color:rgba(0,212,255,.4);box-shadow:0 0 0 3px rgba(0,212,255,.05)}
-input.fi::placeholder{color:var(--dim3)}
-.sep{height:1px;background:var(--border);margin:18px 0}
-.twrap{position:relative;margin-bottom:18px}
-textarea.fi{width:100%;background:#0d0d0d;border:1px solid var(--border);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;font-weight:300;line-height:1.7;padding:14px;resize:vertical;min-height:120px;outline:none;transition:border-color .25s}
-textarea.fi:focus{border-color:rgba(0,212,255,.4);box-shadow:0 0 0 3px rgba(0,212,255,.05)}
-textarea.fi::placeholder{color:var(--dim3);font-style:italic}
-.cc{position:absolute;bottom:10px;right:12px;font-size:10px;color:var(--dim3)}
+.fi{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--white);font-family:'Outfit',sans-serif;font-size:14px;font-weight:300;padding:12px 16px;outline:none;transition:all .25s;border-radius:6px;-webkit-appearance:none}
+.fi:focus{border-color:rgba(26,111,245,.5);background:rgba(255,255,255,.06);box-shadow:0 0 0 3px rgba(26,111,245,.1)}
+.fi::placeholder{color:rgba(255,255,255,.2)}
+select.fi{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7a94' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+select.fi option{background:var(--navy2)}
+.sep{height:1px;background:var(--border);margin:20px 0}
+.twrap{position:relative;margin-bottom:20px}
+textarea.fi{resize:vertical;min-height:120px;line-height:1.7}
+.cc{position:absolute;bottom:10px;right:14px;font-size:11px;color:rgba(255,255,255,.2)}
 
-/* TONE CHIPS */
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
-.chip{padding:5px 12px;border:1px solid var(--border2);background:var(--g3);cursor:pointer;font-size:11px;color:var(--dim);transition:all .2s;font-weight:500}
-.chip:hover{color:var(--white)}
-.chip.on{border-color:var(--blue);color:var(--blue);background:var(--blue3)}
+/* CHIPS */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.chip{padding:6px 14px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:12px;font-weight:500;color:var(--white3);transition:all .2s;border-radius:100px}
+.chip:hover{color:var(--white);border-color:var(--border2)}
+.chip.on{border-color:var(--blue2);color:var(--blue2);background:var(--blue3)}
 
-/* BUTTON */
-.btn-main{width:100%;background:var(--white);color:var(--black);border:none;padding:16px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:5px;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden}
-.btn-main::after{content:'';position:absolute;inset:0;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .3s;z-index:0}
-.btn-main:hover::after{transform:scaleX(1)}
-.btn-main span{position:relative;z-index:1}
-.btn-main:disabled{background:var(--g4);color:var(--dim);cursor:not-allowed}
-.btn-main:disabled::after{display:none}
+/* BTN MAIN */
+.btn-main{width:100%;background:var(--blue);color:var(--white);border:none;padding:16px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px;border-radius:8px}
+.btn-main:hover{background:var(--blue2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,111,245,.4)}
+.btn-main:disabled{background:rgba(255,255,255,.08);color:var(--dim);cursor:not-allowed;transform:none;box-shadow:none}
 
 /* LOADING */
 .ld{display:none;padding:28px 0;text-align:center}
 .ld.on{display:block}
-.ldtxt{font-size:10px;letter-spacing:4px;color:var(--dim);text-transform:uppercase;margin-bottom:14px;animation:pulse-t 1.8s infinite}
-@keyframes pulse-t{0%,100%{opacity:.3}50%{opacity:1}}
-.pbar{width:100%;height:1px;background:var(--border);overflow:hidden;position:relative}
-.pbar::after{content:'';position:absolute;top:0;left:-40%;width:40%;height:100%;background:linear-gradient(90deg,transparent,var(--blue),transparent);animation:scan 1.8s ease-in-out infinite}
+.ldtxt{font-size:11px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:14px;animation:fade-p 1.8s infinite}
+@keyframes fade-p{0%,100%{opacity:.3}50%{opacity:1}}
+.pbar{height:1px;background:var(--border);border-radius:1px;overflow:hidden;position:relative}
+.pbar::after{content:'';position:absolute;top:0;left:-40%;width:40%;height:100%;background:linear-gradient(90deg,transparent,var(--blue2),transparent);animation:scan 1.8s ease-in-out infinite}
 @keyframes scan{to{left:110%}}
 
 /* RESULT */
-.rs{display:none;margin-top:20px;border:1px solid var(--border)}
+.rs{display:none;margin-top:20px;background:var(--navy3);border:1px solid var(--border2);border-radius:8px;overflow:hidden}
 .rs.on{display:block;animation:fadeIn .4s ease}
-.rs-head{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--border);background:var(--g3)}
-.rs-tag{font-size:10px;letter-spacing:3px;color:var(--blue);text-transform:uppercase;font-weight:600}
-.rs-conf{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--green);letter-spacing:2px}
-.rs-body{padding:18px}
-.rs-section{padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--border)}
-.rs-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-.rs-label{font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:7px;font-weight:600}
-.rs-content{font-size:14px;line-height:1.75;color:#ddd;font-weight:300;white-space:pre-wrap}
-.rs-verdict{background:rgba(0,212,255,.05);border-left:2px solid var(--blue);padding:12px 16px}
-.rs-verdict .rs-content{color:var(--blue);font-weight:500}
-.rs-actions{display:flex;gap:8px;padding:12px 18px;border-top:1px solid var(--border);background:var(--g3)}
-.btn-act{font-size:11px;padding:6px 12px;border:1px solid var(--border2);background:transparent;color:var(--dim);cursor:pointer;transition:all .2s;font-weight:500}
-.btn-act:hover{color:var(--white);border-color:var(--border)}
+.rs-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(26,111,245,.08)}
+.rs-tag{font-size:11px;letter-spacing:2px;color:var(--blue2);text-transform:uppercase;font-weight:600}
+.rs-conf{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#00ff88;letter-spacing:2px}
+.rs-body{padding:20px}
+.rs-sec{padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--border)}
+.rs-sec:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.rs-label{font-size:10px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;margin-bottom:8px;font-weight:600}
+.rs-content{font-size:14px;line-height:1.75;color:var(--white2);font-weight:300;white-space:pre-wrap}
+.rs-verdict .rs-content{color:var(--cyan);font-weight:500}
+.rs-actions{display:flex;gap:8px;padding:14px 20px;border-top:1px solid var(--border);background:rgba(255,255,255,.02)}
+.btn-act{font-size:12px;padding:7px 14px;border:1px solid var(--border);background:transparent;color:var(--white3);cursor:pointer;transition:all .2s;border-radius:6px;font-weight:500}
+.btn-act:hover{color:var(--white);border-color:var(--border2)}
 
-/* STATS */
-.stats{display:flex;width:100%;max-width:700px;border:1px solid var(--border);margin-top:20px}
-.st{flex:1;padding:20px 12px;text-align:center;border-right:1px solid var(--border);background:var(--g1);transition:background .3s}
-.st:last-child{border-right:none}
-.st:hover{background:var(--g3)}
-.sn{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--blue);letter-spacing:2px;line-height:1}
-.sl{font-size:9px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-top:4px}
+/* FEATURES SECTION */
+.features-section{background:var(--navy2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:100px 24px}
+.features-inner{max-width:1100px;margin:0 auto}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:56px}
+.feat-card{background:var(--navy);border:1px solid var(--border);border-radius:12px;padding:32px;transition:all .3s;position:relative;overflow:hidden}
+.feat-card:hover{border-color:rgba(26,111,245,.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(26,111,245,.4),transparent);opacity:0;transition:opacity .3s}
+.feat-card:hover::before{opacity:1}
+.feat-icon{font-size:32px;margin-bottom:16px}
+.feat-title{font-size:18px;font-weight:600;margin-bottom:10px}
+.feat-desc{font-size:14px;color:var(--white3);line-height:1.7;font-weight:300}
+
+/* MODELS */
+.models-section{padding:100px 24px}
+.models-inner{max-width:1100px;margin:0 auto}
+.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:48px}
+.model-card{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:28px;cursor:pointer;transition:all .3s;position:relative}
+.model-card:hover{border-color:rgba(26,111,245,.3);transform:translateY(-3px)}
+.model-card.sel{border-color:var(--blue2);background:rgba(26,111,245,.06)}
+.mc-check{position:absolute;top:16px;right:16px;width:22px;height:22px;background:var(--blue);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:11px;color:var(--white);font-weight:700}
+.model-card.sel .mc-check{display:flex}
+.mc-badge{display:inline-block;font-size:10px;letter-spacing:1.5px;padding:3px 10px;font-weight:600;margin-bottom:12px;border-radius:100px}
+.b-std{background:rgba(26,111,245,.15);color:var(--blue2);border:1px solid rgba(26,111,245,.3)}
+.b-adv{background:rgba(124,58,237,.15);color:#a78bfa;border:1px solid rgba(124,58,237,.3)}
+.b-lite{background:rgba(0,255,136,.1);color:#00ff88;border:1px solid rgba(0,255,136,.2)}
+.b-soon{background:rgba(255,255,255,.05);color:var(--dim);border:1px solid var(--border)}
+.mc-name{font-size:16px;font-weight:600;margin-bottom:8px}
+.mc-desc{font-size:13px;color:var(--white3);line-height:1.6;font-weight:300;margin-bottom:14px}
+.mc-specs{display:flex;flex-wrap:wrap;gap:6px}
+.mc-spec{font-size:11px;padding:3px 10px;background:rgba(255,255,255,.05);color:var(--dim);border:1px solid var(--border);border-radius:100px}
 
 /* PRICING */
-.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.pcard{background:var(--g1);border:1px solid var(--border);padding:24px;position:relative;transition:all .3s}
-.pcard:hover{transform:translateY(-3px);border-color:rgba(0,212,255,.2)}
-.pcard.feat{border-color:var(--blue);background:var(--blue3)}
-.pcard.feat::before{content:'MOST POPULAR';position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:3px;background:var(--blue);color:var(--black);padding:2px 12px;font-weight:700}
-.pplan{font-size:10px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;margin-bottom:8px;font-weight:600}
-.pprice{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:2px;line-height:1;margin-bottom:4px}
-.pprice sup{font-size:18px;font-family:'Inter',sans-serif;font-weight:300}
-.pperiod{font-size:12px;color:var(--dim);margin-bottom:18px}
-.pfeatures{list-style:none;margin-bottom:20px}
-.pfeatures li{font-size:13px;color:var(--dim);padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;font-weight:300}
-.pfeatures li:last-child{border-bottom:none}
-.pfeatures li::before{content:'✓';color:var(--blue);font-size:11px;font-weight:700;flex-shrink:0}
-.pfeatures li.no{color:var(--dim3)}
-.pfeatures li.no::before{content:'✗';color:var(--dim3)}
-.btn-plan{width:100%;padding:12px;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:4px;cursor:pointer;transition:all .25s;border:1px solid var(--border2);background:transparent;color:var(--white)}
-.btn-plan:hover{background:var(--white);color:var(--black);border-color:var(--white)}
-.pcard.feat .btn-plan{background:var(--blue);color:var(--black);border-color:var(--blue)}
-.pcard.feat .btn-plan:hover{background:var(--white);border-color:var(--white)}
+.pricing-section{background:var(--navy2);border-top:1px solid var(--border);padding:100px 24px}
+.pricing-inner{max-width:1100px;margin:0 auto}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:48px}
+.p-card{background:var(--navy);border:1px solid var(--border);border-radius:12px;padding:28px;position:relative;transition:all .3s}
+.p-card:hover{transform:translateY(-4px)}
+.p-card.feat{border-color:var(--blue2);background:rgba(26,111,245,.04)}
+.p-card.feat::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:2px;background:var(--blue);color:var(--white);padding:3px 14px;border-radius:100px;font-weight:600;white-space:nowrap}
+.p-plan{font-size:11px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:10px;font-weight:600}
+.p-price{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:2px;line-height:1;margin-bottom:4px}
+.p-price sup{font-size:22px;font-family:'Outfit',sans-serif;font-weight:300;vertical-align:super}
+.p-period{font-size:13px;color:var(--dim);margin-bottom:20px}
+.p-features{list-style:none;margin-bottom:24px}
+.p-features li{font-size:13px;color:var(--white3);padding:7px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;font-weight:300}
+.p-features li:last-child{border-bottom:none}
+.p-features li::before{content:'✓';color:var(--blue2);font-size:12px;font-weight:700;flex-shrink:0}
+.p-features li.no{color:rgba(255,255,255,.2)}
+.p-features li.no::before{content:'×';color:rgba(255,255,255,.2)}
+.btn-plan{width:100%;padding:12px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .25s;border:1px solid var(--border2);background:transparent;color:var(--white);border-radius:8px;letter-spacing:.5px}
+.btn-plan:hover{background:rgba(255,255,255,.08)}
+.p-card.feat .btn-plan{background:var(--blue);border-color:var(--blue)}
+.p-card.feat .btn-plan:hover{background:var(--blue2);border-color:var(--blue2)}
 
-/* UPGRADE WALL */
-.upgrade-wall{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.95);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px}
-.upgrade-wall.show{display:flex}
-.uw-card{background:var(--g1);border:1px solid var(--border);max-width:480px;width:100%;position:relative}
-.uw-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent)}
-.uw-head{padding:20px 24px;border-bottom:1px solid var(--border);background:var(--g3)}
-.uw-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px}
-.uw-body{padding:24px}
-.uw-text{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:20px;font-weight:300}
-.uw-options{display:flex;flex-direction:column;gap:10px}
-.uw-option{padding:16px;border:1px solid var(--border2);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between}
-.uw-option:hover{border-color:rgba(0,212,255,.3);background:var(--blue3)}
-.uw-option.featured{border-color:var(--blue);background:var(--blue3)}
-.uo-left{display:flex;flex-direction:column;gap:2px}
-.uo-name{font-size:14px;font-weight:600}
-.uo-desc{font-size:12px;color:var(--dim);font-weight:300}
-.uo-price{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--blue);letter-spacing:2px}
-.uw-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;transition:color .2s}
-.uw-close:hover{color:var(--white)}
-.uw-free{text-align:center;margin-top:14px;font-size:12px;color:var(--dim)}
-.uw-free a{color:var(--blue);cursor:pointer;text-decoration:none}
-
-/* MODELS GRID */
-.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.mcard{background:var(--g1);border:1px solid var(--border);padding:20px;cursor:pointer;transition:all .25s;position:relative}
-.mcard:hover{border-color:rgba(0,212,255,.3);transform:translateY(-2px)}
-.mcard.sel{border-color:var(--blue);background:var(--blue3)}
-.mc-check{position:absolute;top:14px;right:14px;width:18px;height:18px;background:var(--blue);display:none;align-items:center;justify-content:center;font-size:10px;color:var(--black);font-weight:700}
-.mcard.sel .mc-check{display:flex}
-.mc-name{font-size:15px;font-weight:600;margin-bottom:6px}
-.mc-badge{display:inline-block;font-size:9px;letter-spacing:2px;padding:2px 7px;font-weight:600;margin-bottom:10px}
-.b-std{background:rgba(0,212,255,.1);color:var(--blue);border:1px solid rgba(0,212,255,.2)}
-.b-adv{background:rgba(124,58,237,.1);color:#a78bfa;border:1px solid rgba(124,58,237,.2)}
-.b-lite{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.2)}
-.b-soon{background:rgba(255,255,255,.05);color:var(--dim);border:1px solid var(--border)}
-.mc-desc{font-size:13px;color:var(--dim);line-height:1.6;font-weight:300;margin-bottom:12px}
-.mc-specs{display:flex;flex-wrap:wrap;gap:5px}
-.mc-spec{font-size:10px;padding:3px 7px;background:var(--g4);color:var(--dim2);border:1px solid var(--border)}
-
-/* HISTORY */
-.hi{background:var(--g1);border:1px solid var(--border);padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:14px}
-.hi:hover{border-color:rgba(0,212,255,.2);background:var(--g3)}
-.hi-icon{font-size:16px;flex-shrink:0;margin-top:2px}
-.hi-main{flex:1;min-width:0}
-.hi-q{font-size:13px;color:var(--white);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hi-meta{font-size:11px;color:var(--dim);display:flex;gap:10px}
-.hi-right{flex-shrink:0;text-align:right}
-.hi-conf{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--green)}
-.hi-time{font-size:10px;color:var(--dim)}
-.empty{text-align:center;padding:60px 20px;color:var(--dim)}
-.empty-i{font-size:40px;margin-bottom:12px;opacity:.3}
-
-/* SETTINGS */
-.settings-grid{display:grid;grid-template-columns:180px 1fr;gap:24px}
-.snav{border-right:1px solid var(--border);padding-right:16px}
-.sni{padding:8px 12px;font-size:13px;color:var(--dim);cursor:pointer;transition:all .2s;margin-bottom:2px}
-.sni:hover{color:var(--white)}
-.sni.on{color:var(--blue);background:var(--blue3);border-left:2px solid var(--blue);padding-left:10px}
-.ssec{display:none}
-.ssec.on{display:block}
-.sblock{background:var(--g1);border:1px solid var(--border);padding:20px;margin-bottom:14px}
-.sb-title{font-size:13px;font-weight:600;margin-bottom:4px}
-.sb-desc{font-size:12px;color:var(--dim);margin-bottom:14px;font-weight:300;line-height:1.6}
-.trow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
-.trow:last-child{border-bottom:none;padding-bottom:0}
-.tlabel{font-size:13px}
-.tsub{font-size:11px;color:var(--dim);margin-top:2px;font-weight:300}
-.tog{width:38px;height:20px;background:var(--g4);border-radius:10px;cursor:pointer;position:relative;transition:background .3s;border:1px solid var(--border2);flex-shrink:0}
-.tog.on{background:var(--blue);border-color:var(--blue)}
-.tog::after{content:'';position:absolute;width:14px;height:14px;background:var(--white);border-radius:50%;top:2px;left:2px;transition:left .3s}
-.tog.on::after{left:20px}
-select.sf{width:100%;background:var(--g3);border:1px solid var(--border2);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;padding:9px 12px;outline:none;margin-top:8px;cursor:pointer}
-select.sf option{background:var(--g2)}
+/* FOUNDER SECTION */
+.founder-section{padding:100px 24px;border-top:1px solid var(--border)}
+.founder-inner{max-width:900px;margin:0 auto}
+.founder-card{display:grid;grid-template-columns:280px 1fr;gap:60px;align-items:center}
+.founder-img-wrap{position:relative}
+.founder-img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;border-radius:4px;filter:grayscale(20%);display:block}
+.founder-img-placeholder{width:100%;aspect-ratio:3/4;background:var(--navy2);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:80px;color:var(--dim)}
+.founder-img-wrap::after{content:'';position:absolute;inset:0;border-radius:4px;background:linear-gradient(180deg,transparent 60%,var(--navy) 100%)}
+.founder-tag{font-size:11px;letter-spacing:3px;color:var(--blue2);text-transform:uppercase;font-weight:600;margin-bottom:16px}
+.founder-name{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:3px;line-height:.95;margin-bottom:8px}
+.founder-role{font-size:14px;color:var(--dim);margin-bottom:24px;font-weight:400;letter-spacing:1px}
+.founder-bio{font-size:15px;color:var(--white3);line-height:1.8;font-weight:300;margin-bottom:28px}
+.founder-tags{display:flex;gap:8px;flex-wrap:wrap}
+.ftag{font-size:12px;padding:6px 14px;border:1px solid var(--border2);color:var(--white3);border-radius:100px;font-weight:400}
 
 /* ENTERPRISE */
-.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.fcard{background:var(--g1);border:1px solid var(--border);padding:22px;transition:all .3s}
-.fcard:hover{border-color:rgba(0,212,255,.2);transform:translateY(-3px)}
-.fc-icon{font-size:26px;margin-bottom:12px}
-.fc-title{font-size:15px;font-weight:600;margin-bottom:8px}
-.fc-desc{font-size:13px;color:var(--dim);line-height:1.65;font-weight:300}
+.enterprise-section{padding:100px 24px;background:var(--navy2);border-top:1px solid var(--border)}
+.enterprise-inner{max-width:1100px;margin:0 auto}
+.e-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:48px}
+.e-card{background:var(--navy);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all .3s}
+.e-card:hover{border-color:rgba(26,111,245,.3);transform:translateY(-3px)}
+.e-icon{font-size:28px;margin-bottom:14px}
+.e-title{font-size:17px;font-weight:600;margin-bottom:10px}
+.e-desc{font-size:13px;color:var(--white3);line-height:1.65;font-weight:300}
+
+/* ABOUT */
+.about-section{padding:100px 24px}
+.about-inner{max-width:700px;margin:0 auto}
+.a-block{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
+.a-title{font-size:15px;font-weight:600;margin-bottom:8px}
+.a-text{font-size:14px;color:var(--white3);line-height:1.8;font-weight:300}
+
+/* HISTORY */
+.history-section{padding:60px 24px}
+.history-inner{max-width:800px;margin:0 auto}
+.hi{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:10px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:14px}
+.hi:hover{border-color:rgba(26,111,245,.3);background:var(--navy3)}
+.hi-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.hi-main{flex:1;min-width:0}
+.hi-q{font-size:14px;color:var(--white);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.hi-meta{font-size:12px;color:var(--dim);display:flex;gap:12px}
+.hi-right{flex-shrink:0;text-align:right}
+.hi-conf{font-family:'Bebas Neue',sans-serif;font-size:18px;color:#00ff88}
+.hi-time{font-size:11px;color:var(--dim)}
+.empty-state{text-align:center;padding:80px 20px;color:var(--dim)}
+.empty-i{font-size:48px;margin-bottom:16px;opacity:.3}
+
+/* SETTINGS */
+.settings-section{padding:60px 24px}
+.settings-inner{max-width:900px;margin:0 auto}
+.settings-grid{display:grid;grid-template-columns:200px 1fr;gap:28px}
+.snav{border-right:1px solid var(--border);padding-right:20px}
+.sni{padding:9px 14px;font-size:14px;color:var(--dim);cursor:pointer;transition:all .2s;margin-bottom:2px;border-radius:8px;font-weight:400}
+.sni:hover{color:var(--white);background:rgba(255,255,255,.04)}
+.sni.on{color:var(--blue2);background:rgba(26,111,245,.08);border-left:2px solid var(--blue2);padding-left:12px}
+.ssec{display:none}
+.ssec.on{display:block}
+.sblock{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px}
+.sb-t{font-size:15px;font-weight:600;margin-bottom:4px}
+.sb-d{font-size:13px;color:var(--dim);margin-bottom:16px;font-weight:300;line-height:1.6}
+.trow{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.trow:last-child{border-bottom:none;padding-bottom:0}
+.tlabel{font-size:14px;font-weight:400}
+.tsub{font-size:12px;color:var(--dim);margin-top:2px;font-weight:300}
+.tog{width:42px;height:24px;background:rgba(255,255,255,.1);border-radius:12px;cursor:pointer;position:relative;transition:background .3s;border:1px solid var(--border);flex-shrink:0}
+.tog.on{background:var(--blue);border-color:var(--blue)}
+.tog::after{content:'';position:absolute;width:16px;height:16px;background:var(--white);border-radius:50%;top:3px;left:3px;transition:left .3s;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.tog.on::after{left:21px}
+select.sf{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--white);font-family:'Outfit',sans-serif;font-size:14px;padding:10px 14px;outline:none;margin-top:8px;cursor:pointer;border-radius:8px}
+select.sf option{background:var(--navy2)}
+
+/* UPGRADE WALL */
+.upgrade-wall{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px}
+.upgrade-wall.show{display:flex}
+.uw{background:var(--navy2);border:1px solid var(--border2);border-radius:16px;max-width:500px;width:100%;position:relative;overflow:hidden}
+.uw::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.uw-head{padding:24px 28px;border-bottom:1px solid var(--border)}
+.uw-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px}
+.uw-body{padding:24px 28px}
+.uw-text{font-size:14px;color:var(--white3);line-height:1.7;margin-bottom:20px;font-weight:300}
+.uw-opts{display:flex;flex-direction:column;gap:10px}
+.uw-opt{padding:16px 20px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between}
+.uw-opt:hover{border-color:rgba(26,111,245,.3);background:rgba(26,111,245,.05)}
+.uw-opt.feat{border-color:var(--blue2);background:rgba(26,111,245,.08)}
+.uo-name{font-size:15px;font-weight:600;margin-bottom:2px}
+.uo-desc{font-size:12px;color:var(--dim)}
+.uo-price{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--blue2);letter-spacing:2px}
+.uw-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.08);border:none;color:var(--white3);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.uw-close:hover{background:rgba(255,255,255,.15);color:var(--white)}
+.uw-skip{text-align:center;margin-top:14px;font-size:13px;color:var(--dim)}
+.uw-skip a{color:var(--blue2);cursor:pointer;text-decoration:none;transition:color .2s}
+.uw-skip a:hover{color:var(--white)}
+
+/* PAGE HEADER */
+.page-header{padding:60px 24px 0;max-width:1100px;margin:0 auto}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:3px;margin-bottom:8px}
+.page-sub{font-size:15px;color:var(--dim);font-weight:300;margin-bottom:40px}
 
 /* FOOTER */
-footer{border-top:1px solid var(--border);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10;margin-top:auto}
-.ft{font-size:10px;letter-spacing:2px;color:var(--dim3);text-transform:uppercase}
-.flinks{display:flex;gap:16px}
-.flink{font-size:10px;letter-spacing:1.5px;color:var(--dim3);text-transform:uppercase;text-decoration:none;cursor:pointer;transition:color .2s;border:none;background:none}
+footer{border-top:1px solid var(--border);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10;background:rgba(5,11,24,.95)}
+.ft{font-size:12px;color:var(--dim);font-weight:400}
+.flinks{display:flex;gap:20px}
+.flink{font-size:12px;color:var(--dim);cursor:pointer;transition:color .2s;border:none;background:none;text-decoration:none}
 .flink:hover{color:var(--white)}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-@media(max-width:640px){
-  header{padding:0 14px;gap:10px}
-  .hright .hbtn:first-child{display:none}
-  .decide-center{padding:40px 14px}
-  .hero-title{font-size:56px}
-  .frow{flex-direction:column}
-  .pgrid,.mgrid,.fgrid{grid-template-columns:1fr}
-  .stats{flex-wrap:wrap}
-  .st{flex:1;min-width:50%;border-bottom:1px solid var(--border)}
-  footer{flex-direction:column;gap:8px;text-align:center;padding:16px}
+@media(max-width:768px){
+  header{padding:0 16px}
+  nav{display:none}
+  .hero-section{padding:60px 16px 40px}
+  .stats-row{flex-wrap:wrap}
+  .stat-item{min-width:50%;border-bottom:1px solid var(--border)}
+  .section{padding:60px 16px}
+  .features-section,.models-section,.pricing-section,.founder-section,.enterprise-section{padding:60px 16px}
+  .founder-card{grid-template-columns:1fr}
+  .founder-img-wrap{max-width:240px}
   .settings-grid{grid-template-columns:1fr}
-  .snav{border-right:none;border-bottom:1px solid var(--border);padding-right:0;padding-bottom:10px;display:flex;flex-wrap:wrap;gap:4px}
+  .snav{border-right:none;border-bottom:1px solid var(--border);padding-right:0;padding-bottom:12px;display:flex;flex-wrap:wrap;gap:4px}
+  footer{flex-direction:column;gap:10px;text-align:center;padding:20px}
+  .flinks{flex-wrap:wrap;justify-content:center}
 }
 </style>
 </head>
 <body>
 
-<div class="bg-wrap"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
-<div class="grid-bg"></div>
-<div class="pts"><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div></div>
+<div class="bg-mesh"></div>
 
 <!-- HEADER -->
 <header>
-  <div class="logo" onclick="showPage('decide')">X<span>CALIBER</span></div>
+  <a class="logo" onclick="showPage('home')">X<span>CALIBER</span></a>
   <nav>
-    <button class="nb active" onclick="showPage('decide')">⚔ Decide</button>
+    <button class="nb active" onclick="showPage('home')">Home</button>
+    <button class="nb" onclick="showPage('decide')">Decide</button>
     <button class="nb" onclick="showPage('models')">Models</button>
-    <button class="nb" onclick="showPage('history')">History</button>
     <button class="nb" onclick="showPage('pricing')">Pricing</button>
     <button class="nb" onclick="showPage('enterprise')">Enterprise</button>
     <button class="nb" onclick="showPage('about')">About</button>
   </nav>
   <div class="hright">
-    <div class="live-badge">Live</div>
-    <button class="hbtn" onclick="showPage('settings')">⚙ Settings</button>
+    <div class="live-dot">Live</div>
+    <button class="hbtn" onclick="showPage('settings')">Settings</button>
     <button class="hbtn cta" onclick="showPage('pricing')">Upgrade ↗</button>
   </div>
 </header>
 
 <!-- UPGRADE WALL -->
 <div class="upgrade-wall" id="upgradeWall">
-  <div class="uw-card">
+  <div class="uw">
     <button class="uw-close" onclick="closeUpgrade()">✕</button>
-    <div class="uw-head">
-      <div class="uw-title">⚔ Upgrade XCALIBER</div>
-    </div>
+    <div class="uw-head"><div class="uw-title">⚔ Upgrade XCALIBER</div></div>
     <div class="uw-body">
-      <div class="uw-text">You've used your <strong>3 free decisions</strong> for today. Upgrade to get unlimited decisions and unlock the full power of XCALIBER.</div>
-      <div class="uw-options">
-        <div class="uw-option" onclick="payNow('starter')">
-          <div class="uo-left"><div class="uo-name">Starter</div><div class="uo-desc">30 decisions/month · XCI-Lite</div></div>
-          <div class="uo-price">₹499/mo</div>
-        </div>
-        <div class="uw-option featured" onclick="payNow('pro')">
-          <div class="uo-left"><div class="uo-name">Professional ⭐</div><div class="uo-desc">Unlimited · XCI-1 Standard · All features</div></div>
-          <div class="uo-price">₹1,999/mo</div>
-        </div>
-        <div class="uw-option" onclick="payNow('business')">
-          <div class="uo-left"><div class="uo-name">Business</div><div class="uo-desc">Unlimited · XCI-2 Advanced · API access</div></div>
-          <div class="uo-price">₹7,999/mo</div>
-        </div>
+      <div class="uw-text">You've used your <strong>3 free decisions</strong> for today. Upgrade to unlock unlimited decisions and full intelligence.</div>
+      <div class="uw-opts">
+        <div class="uw-opt" onclick="payNow('starter')"><div><div class="uo-name">Starter</div><div class="uo-desc">30 decisions/month · XCI-Lite</div></div><div class="uo-price">₹499/mo</div></div>
+        <div class="uw-opt feat" onclick="payNow('pro')"><div><div class="uo-name">Professional ⭐</div><div class="uo-desc">Unlimited · XCI-1 Standard</div></div><div class="uo-price">₹1,999/mo</div></div>
+        <div class="uw-opt" onclick="payNow('business')"><div><div class="uo-name">Business</div><div class="uo-desc">Unlimited · XCI-2 Advanced</div></div><div class="uo-price">₹7,999/mo</div></div>
       </div>
-      <div class="uw-free">or <a onclick="closeUpgrade()">continue with 3 free decisions tomorrow →</a></div>
+      <div class="uw-skip">or <a onclick="closeUpgrade()">continue with 3 free tomorrow →</a></div>
     </div>
   </div>
 </div>
 
 <div class="app">
 
-<!-- ══ DECIDE PAGE ══ -->
-<div class="page active" id="page-decide">
-<div class="decide-center">
-  <div class="eyebrow">⚔ &nbsp; Civilization Intelligence Layer &nbsp; ⚔</div>
-  <h1 class="hero-title">Don't Guess.<br><span class="ac">Decide.</span></h1>
-  <p class="hero-sub">Type your business problem. XCALIBER thinks. One clear decision with confidence, reasoning and a plan.</p>
-
-  <div class="card">
-    <div class="card-head"><span style="width:6px;height:6px;background:var(--blue);border-radius:50%;animation:blink 2s infinite"></span><span class="card-title">XCALIBER Decision Engine</span><span id="freeCounter" style="margin-left:auto;font-size:10px;letter-spacing:2px;color:var(--blue)">3 FREE LEFT TODAY</span></div>
-    <div class="card-body">
-
-      <div class="trial-banner">
-        <div class="trial-text">🎁 Free Trial — <span><span id="trialLeft">3</span> decisions remaining today</span>. Upgrade for unlimited access.</div>
-        <div class="trial-count" id="trialCount">3</div>
-      </div>
-
-      <!-- Model -->
-      <div class="fg">
-        <div class="flabel">Intelligence Model</div>
-        <div class="chips" id="modelChips">
-          <div class="chip on" onclick="selModel(this,'claude-sonnet-4-6')">⚡ XCI-1 Standard</div>
-          <div class="chip" onclick="selModel(this,'claude-opus-4-6')">🧠 XCI-2 Advanced</div>
-          <div class="chip" onclick="selModel(this,'claude-haiku-4-5-20251001')">⚡⚡ XCI-Lite</div>
-        </div>
-      </div>
-
-      <!-- Tone -->
-      <div class="fg">
-        <div class="flabel">Decision Tone</div>
-        <div class="chips" id="toneChips">
-          <div class="chip on" onclick="selTone(this,'Strategic')">Strategic</div>
-          <div class="chip" onclick="selTone(this,'Analytical')">Analytical</div>
-          <div class="chip" onclick="selTone(this,'Direct')">Direct</div>
-          <div class="chip" onclick="selTone(this,'Creative')">Creative</div>
-          <div class="chip" onclick="selTone(this,'Conservative')">Conservative</div>
-        </div>
-      </div>
-
-      <div class="sep"></div>
-
-      <!-- Context row -->
-      <div class="frow">
-        <div class="fg">
-          <div class="flabel">Industry (Optional)</div>
-          <input class="fi" type="text" id="industry" placeholder="e.g. Retail, SaaS, Finance..."/>
-        </div>
-        <div class="fg">
-          <div class="flabel">Business Size (Optional)</div>
-          <input class="fi" type="text" id="bizSize" placeholder="e.g. Startup, ₹5L revenue..."/>
-        </div>
-      </div>
-
-      <!-- Problem -->
-      <div class="fg">
-        <div class="flabel">Your Business Problem or Decision</div>
-        <div class="twrap">
-          <textarea class="fi" id="prob" maxlength="2000" placeholder="Describe your business challenge in detail...&#10;&#10;Example: I run a clothing brand in India with ₹10L/month revenue. Should I expand to Dubai now or invest in European online marketing first?"></textarea>
-          <div class="cc"><span id="cc">0</span>/2000</div>
-        </div>
-      </div>
-
-      <!-- XCALIBER API KEY (hidden from users — pre-configured) -->
-      <input type="hidden" id="xKey" value=""/>
-
-      <button class="btn-main" id="decBtn" onclick="decide()">
-        <span>⚔ &nbsp; GET XCALIBER DECISION</span>
-      </button>
-
-      <div class="ld" id="ld">
-        <div class="ldtxt">XCALIBER Intelligence Engine Processing Your Decision</div>
-        <div class="pbar"></div>
-      </div>
-
-      <div class="rs" id="rs">
-        <div class="rs-head">
-          <div class="rs-tag">⚔ XCALIBER Strategic Decision</div>
-          <div class="rs-conf" id="rsConf"></div>
-        </div>
-        <div class="rs-body" id="rsBody"></div>
-        <div class="rs-actions">
-          <button class="btn-act" onclick="copyRes()">📋 Copy</button>
-          <button class="btn-act" onclick="saveRes()">💾 Save</button>
-          <button class="btn-act" onclick="clearRes()">✕ Clear</button>
-          <button class="btn-act" style="margin-left:auto;color:var(--blue);border-color:rgba(0,212,255,.3)" onclick="showPage('pricing')">⬆ Upgrade for Unlimited</button>
-        </div>
-      </div>
-
+<!-- ══ HOME PAGE ══ -->
+<div class="page active" id="page-home">
+  <!-- HERO -->
+  <div class="hero-section">
+    <div class="hero-tag"><span style="width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:blink 2s infinite"></span> Civilization Intelligence Layer</div>
+    <h1 class="hero-h1">We're Changing<br><span class="grad">Decision Making.</span><br>Forever.</h1>
+    <p class="hero-sub">XCALIBER gives every business owner — from startups in India to enterprises in the UAE — access to world-class AI decision intelligence. In 60 seconds.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="showPage('decide')">⚔ Try XCALIBER Free</button>
+      <button class="btn-ghost" onclick="showPage('about')">Learn About Us →</button>
     </div>
   </div>
 
-  <div class="stats">
-    <div class="st"><div class="sn">60s</div><div class="sl">Decision Time</div></div>
-    <div class="st"><div class="sn">∞</div><div class="sl">Industries</div></div>
-    <div class="st"><div class="sn">0</div><div class="sl">Bias</div></div>
-    <div class="st"><div class="sn">24/7</div><div class="sl">Available</div></div>
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num">60s</div><div class="stat-label">Decision Time</div></div>
+    <div class="stat-item"><div class="stat-num">∞</div><div class="stat-label">Industries Served</div></div>
+    <div class="stat-item"><div class="stat-num">0</div><div class="stat-label">Bias</div></div>
+    <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Available Globally</div></div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-title">From Problem<br>to Decision.</h2>
+    <p class="section-sub">Three simple steps. One powerful decision. Every time.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div class="step-title">Describe Your Problem</div><div class="step-desc">Type your business challenge, decision, or strategic question in plain language. Add industry context for sharper results.</div></div>
+      <div class="step"><div class="step-num">02</div><div class="step-title">XCALIBER Thinks</div><div class="step-desc">Our AI intelligence engine analyzes your situation against thousands of business scenarios, market data, and strategic frameworks.</div></div>
+      <div class="step"><div class="step-num">03</div><div class="step-title">Get Your Decision</div><div class="step-desc">Receive one clear decision with confidence score, three key reasons, risk analysis, timeline, and a backup plan. Act with certainty.</div></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features-section">
+    <div class="features-inner">
+      <div class="section-tag">Why XCALIBER</div>
+      <h2 class="section-title">Built Different.<br>Decides Better.</h2>
+      <p class="section-sub">Everything a business needs to stop guessing and start deciding with total confidence.</p>
+      <div class="feat-grid">
+        <div class="feat-card"><div class="feat-icon">⚡</div><div class="feat-title">Instant Intelligence</div><div class="feat-desc">Get a complete strategic decision in under 60 seconds. No waiting. No scheduling. No consultants. Just clarity.</div></div>
+        <div class="feat-card"><div class="feat-icon">🎯</div><div class="feat-title">Laser Precise</div><div class="feat-desc">Not vague suggestions. One specific decision with confidence percentage, exact reasoning, and concrete timeline.</div></div>
+        <div class="feat-card"><div class="feat-icon">🌍</div><div class="feat-title">Global Intelligence</div><div class="feat-desc">Trained on global business data across Europe, Middle East, India, and Southeast Asia. Localized intelligence for every market.</div></div>
+        <div class="feat-card"><div class="feat-icon">🔐</div><div class="feat-title">Zero Bias</div><div class="feat-desc">No political agenda. No financial interest. No ego. Pure objective intelligence that serves only one master — the right decision.</div></div>
+        <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-title">Risk Analysis</div><div class="feat-desc">Every decision comes with primary risk identification and specific mitigation strategies so you are never caught off guard.</div></div>
+        <div class="feat-card"><div class="feat-icon">🔄</div><div class="feat-title">Alternative Plans</div><div class="feat-desc">Always includes a backup strategy. Because even the best decisions need a Plan B. XCALIBER thinks three steps ahead.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUNDER PREVIEW -->
+  <div style="padding:100px 24px;border-top:1px solid var(--border)">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+      <div>
+        <div class="section-tag">Our Founder</div>
+        <h2 class="section-title">Built by a<br>Visionary.</h2>
+        <p style="font-size:16px;color:var(--white3);line-height:1.8;font-weight:300;margin-bottom:28px">Mohammad Shad Ahmed built XCALIBER from the ground up with one belief — that every business owner deserves world-class decision intelligence, regardless of their size or budget.</p>
+        <button class="btn-ghost" onclick="showPage('about')" style="display:inline-flex;align-items:center;gap:8px">Meet the Founder →</button>
+      </div>
+      <div style="background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:32px;text-align:center">
+        <div style="font-size:60px;margin-bottom:16px">👤</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;margin-bottom:4px">Mohammad Shad Ahmed</div>
+        <div style="font-size:13px;color:var(--blue2);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">Founder & CEO</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+          <span class="ftag">🇮🇳 India</span>
+          <span class="ftag">⚔ XCALIBER</span>
+          <span class="ftag">🌍 Global Vision</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA SECTION -->
+  <div style="padding:100px 24px;background:var(--navy2);border-top:1px solid var(--border);text-align:center">
+    <div style="max-width:600px;margin:0 auto">
+      <div class="section-tag" style="display:inline-block;margin-bottom:16px">Start Today</div>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,80px);letter-spacing:3px;line-height:.95;margin-bottom:20px">Ready to Decide<br><span style="color:var(--blue2)">With Certainty?</span></h2>
+      <p style="font-size:16px;color:var(--white3);margin-bottom:36px;font-weight:300;line-height:1.7">Join businesses globally who have stopped guessing and started deciding with XCALIBER intelligence.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-primary" onclick="showPage('decide')" style="font-size:15px;padding:16px 36px">⚔ Start Free — 3 Decisions Daily</button>
+        <button class="btn-ghost" onclick="showPage('pricing')" style="font-size:15px;padding:16px 36px">View Pricing →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DECIDE PAGE ══ -->
+<div class="page" id="page-decide">
+<div class="decide-section">
+  <div class="decide-inner">
+    <div style="text-align:center;margin-bottom:40px">
+      <div class="hero-tag" style="margin-bottom:20px">⚔ Decision Engine</div>
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,80px);letter-spacing:3px;line-height:.95;margin-bottom:16px">Don't Guess.<br><span style="color:var(--blue2)">Decide.</span></h1>
+      <p style="font-size:16px;color:var(--white3);font-weight:300">Type your problem. XCALIBER thinks. You get one clear decision.</p>
+    </div>
+
+    <div class="d-card">
+      <div class="d-head">
+        <div class="d-dot"></div>
+        <div class="d-title">XCALIBER Decision Engine</div>
+        <div class="d-counter" id="freeCounter">3 FREE LEFT</div>
+      </div>
+      <div class="d-body">
+        <div class="trial-banner">
+          <div class="trial-text">🎁 Free Trial — <span><span id="trialLeft">3</span> decisions remaining today</span></div>
+          <div class="trial-num" id="trialCount">3</div>
+        </div>
+
+        <div class="fg">
+          <div class="flabel">Intelligence Model</div>
+          <div class="chips" id="modelChips">
+            <div class="chip on" onclick="selModel(this,'claude-sonnet-4-6')">⚡ XCI-1 Standard</div>
+            <div class="chip" onclick="selModel(this,'claude-opus-4-6')">🧠 XCI-2 Advanced</div>
+            <div class="chip" onclick="selModel(this,'claude-haiku-4-5-20251001')">⚡⚡ XCI-Lite</div>
+          </div>
+        </div>
+
+        <div class="fg">
+          <div class="flabel">Decision Tone</div>
+          <div class="chips" id="toneChips">
+            <div class="chip on" onclick="selTone(this,'Strategic')">Strategic</div>
+            <div class="chip" onclick="selTone(this,'Analytical')">Analytical</div>
+            <div class="chip" onclick="selTone(this,'Direct')">Direct</div>
+            <div class="chip" onclick="selTone(this,'Creative')">Creative</div>
+            <div class="chip" onclick="selTone(this,'Conservative')">Conservative</div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="frow">
+          <div class="fg"><div class="flabel">Industry (Optional)</div><input class="fi" type="text" id="industry" placeholder="e.g. Retail, SaaS, Finance..."/></div>
+          <div class="fg"><div class="flabel">Business Size (Optional)</div><input class="fi" type="text" id="bizSize" placeholder="e.g. Startup, ₹5L revenue..."/></div>
+        </div>
+
+        <div class="fg">
+          <div class="flabel">Your Business Problem</div>
+          <div class="twrap">
+            <textarea class="fi" id="prob" maxlength="2000" placeholder="Describe your business challenge...&#10;&#10;Example: I run a clothing brand in India with ₹10L/month revenue. Should I expand to Dubai now or invest in European markets first?"></textarea>
+            <div class="cc"><span id="cc">0</span>/2000</div>
+          </div>
+        </div>
+
+        <input type="hidden" id="xKey" value=""/>
+
+        <button class="btn-main" id="decBtn" onclick="decide()">⚔ &nbsp; GET XCALIBER DECISION</button>
+
+        <div class="ld" id="ld">
+          <div class="ldtxt">XCALIBER Intelligence Engine Processing</div>
+          <div class="pbar"></div>
+        </div>
+
+        <div class="rs" id="rs">
+          <div class="rs-head">
+            <div class="rs-tag">⚔ XCALIBER Decision</div>
+            <div class="rs-conf" id="rsConf"></div>
+          </div>
+          <div class="rs-body" id="rsBody"></div>
+          <div class="rs-actions">
+            <button class="btn-act" onclick="copyRes()">📋 Copy</button>
+            <button class="btn-act" onclick="saveRes()">💾 Save</button>
+            <button class="btn-act" onclick="clearRes()">✕ Clear</button>
+            <button class="btn-act" style="margin-left:auto;color:var(--blue2);border-color:rgba(26,111,245,.3)" onclick="showPage('pricing')">⬆ Upgrade</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 </div>
 
 <!-- ══ MODELS PAGE ══ -->
 <div class="page" id="page-models">
-<div class="page-wrap">
-  <div class="page-title">Intelligence Models</div>
-  <div class="page-sub">Three tiers of XCALIBER intelligence — choose what powers your decisions</div>
-  <div class="mgrid">
-    <div class="mcard sel" onclick="setModel(this,'claude-sonnet-4-6')">
+<div class="page-header"><div class="page-title">Intelligence Models</div><div class="page-sub">Three tiers of XCALIBER intelligence — choose what powers your decisions</div></div>
+<div class="models-section" style="padding-top:0">
+<div class="models-inner" style="padding-top:0">
+  <div class="model-grid">
+    <div class="model-card sel" onclick="setModel(this,'claude-sonnet-4-6')">
       <div class="mc-check">✓</div>
-      <div class="mc-name">XCALIBER XCI-1 Standard</div>
       <div class="mc-badge b-std">STANDARD</div>
+      <div class="mc-name">XCALIBER XCI-1 Standard</div>
       <div class="mc-desc">Most intelligent balanced model. Perfect for complex business decisions requiring deep reasoning and nuanced strategic analysis.</div>
       <div class="mc-specs"><div class="mc-spec">Fast</div><div class="mc-spec">Deep Reasoning</div><div class="mc-spec">Best Balance</div></div>
     </div>
-    <div class="mcard" onclick="setModel(this,'claude-opus-4-6')">
+    <div class="model-card" onclick="setModel(this,'claude-opus-4-6')">
       <div class="mc-check">✓</div>
-      <div class="mc-name">XCALIBER XCI-2 Advanced</div>
       <div class="mc-badge b-adv">ADVANCED</div>
+      <div class="mc-name">XCALIBER XCI-2 Advanced</div>
       <div class="mc-desc">Most powerful model for enterprise-grade strategic intelligence. Ultra-complex decisions, global analysis, maximum depth.</div>
       <div class="mc-specs"><div class="mc-spec">Most Powerful</div><div class="mc-spec">Enterprise</div><div class="mc-spec">Max Depth</div></div>
     </div>
-    <div class="mcard" onclick="setModel(this,'claude-haiku-4-5-20251001')">
+    <div class="model-card" onclick="setModel(this,'claude-haiku-4-5-20251001')">
       <div class="mc-check">✓</div>
-      <div class="mc-name">XCALIBER XCI-Lite</div>
       <div class="mc-badge b-lite">LITE</div>
-      <div class="mc-desc">Fastest model for rapid daily decisions and high-volume use cases. Instant clarity for straightforward business questions.</div>
+      <div class="mc-name">XCALIBER XCI-Lite</div>
+      <div class="mc-desc">Fastest model for rapid daily decisions. Instant clarity for straightforward business questions. Free tier included.</div>
       <div class="mc-specs"><div class="mc-spec">Ultra Fast</div><div class="mc-spec">Daily Use</div><div class="mc-spec">Free Tier</div></div>
     </div>
-    <div class="mcard" style="opacity:.4;cursor:not-allowed">
-      <div class="mc-name">XCALIBER XCI-Pro</div>
+    <div class="model-card" style="opacity:.4;cursor:not-allowed">
       <div class="mc-badge b-soon">COMING 2026</div>
+      <div class="mc-name">XCALIBER XCI-Pro</div>
       <div class="mc-desc">Our proprietary model trained exclusively on business decision intelligence data from 100,000+ real decisions.</div>
       <div class="mc-specs"><div class="mc-spec">Proprietary</div><div class="mc-spec">Business-Trained</div></div>
     </div>
   </div>
 </div>
 </div>
-
-<!-- ══ HISTORY PAGE ══ -->
-<div class="page" id="page-history">
-<div class="page-wrap">
-  <div class="page-title">Decision History</div>
-  <div class="page-sub">Your saved decisions — stored locally in your browser</div>
-  <div id="histList"></div>
-</div>
 </div>
 
 <!-- ══ PRICING PAGE ══ -->
 <div class="page" id="page-pricing">
-<div class="page-wrap">
-  <div class="page-title">Simple Pricing</div>
-  <div class="page-sub">Start free. Upgrade when you're ready. Cancel anytime.</div>
-  <div class="pgrid">
-    <div class="pcard">
-      <div class="pplan">Free</div>
-      <div class="pprice"><sup>₹</sup>0</div>
-      <div class="pperiod">3 decisions per day</div>
-      <ul class="pfeatures">
+<div class="page-header"><div class="page-title">Simple Pricing</div><div class="page-sub">Start free. Upgrade when ready. Cancel anytime.</div></div>
+<div class="pricing-section" style="padding-top:0;background:transparent;border-top:none">
+<div class="pricing-inner" style="padding-top:0">
+  <div class="pricing-grid">
+    <div class="p-card">
+      <div class="p-plan">Free</div>
+      <div class="p-price"><sup>₹</sup>0</div>
+      <div class="p-period">3 decisions per day</div>
+      <ul class="p-features">
         <li>3 decisions daily</li>
         <li>XCI-Lite model</li>
         <li>Basic decision format</li>
         <li>7-day history</li>
         <li class="no">Unlimited decisions</li>
         <li class="no">Advanced models</li>
-        <li class="no">Priority processing</li>
       </ul>
       <button class="btn-plan" onclick="showPage('decide')">Start Free</button>
     </div>
-    <div class="pcard feat">
-      <div class="pplan">Professional</div>
-      <div class="pprice"><sup>₹</sup>1,999</div>
-      <div class="pperiod">per month · billed monthly</div>
-      <ul class="pfeatures">
+    <div class="p-card feat">
+      <div class="p-plan">Professional</div>
+      <div class="p-price"><sup>₹</sup>1,999</div>
+      <div class="p-period">per month</div>
+      <ul class="p-features">
         <li>Unlimited decisions</li>
         <li>XCI-1 Standard model</li>
         <li>Full decision format</li>
         <li>Unlimited history</li>
         <li>All tone settings</li>
         <li>Industry context</li>
-        <li class="no">API access</li>
       </ul>
       <button class="btn-plan" onclick="payNow('pro')">Upgrade to Pro</button>
     </div>
-    <div class="pcard">
-      <div class="pplan">Business</div>
-      <div class="pprice"><sup>₹</sup>7,999</div>
-      <div class="pperiod">per month · billed monthly</div>
-      <ul class="pfeatures">
+    <div class="p-card">
+      <div class="p-plan">Business</div>
+      <div class="p-price"><sup>₹</sup>7,999</div>
+      <div class="p-period">per month</div>
+      <ul class="p-features">
         <li>Unlimited decisions</li>
         <li>XCI-2 Advanced model</li>
         <li>Full decision format</li>
         <li>Unlimited history</li>
         <li>All features</li>
-        <li>Export decisions</li>
         <li>API access</li>
       </ul>
       <button class="btn-plan" onclick="payNow('business')">Upgrade to Business</button>
     </div>
-    <div class="pcard">
-      <div class="pplan">Enterprise</div>
-      <div class="pprice" style="font-size:28px;letter-spacing:1px">Custom</div>
-      <div class="pperiod">contact us for pricing</div>
-      <ul class="pfeatures">
+    <div class="p-card">
+      <div class="p-plan">Enterprise</div>
+      <div class="p-price" style="font-size:32px">Custom</div>
+      <div class="p-period">contact us</div>
+      <ul class="p-features">
         <li>Everything in Business</li>
         <li>Custom model training</li>
         <li>Dedicated infrastructure</li>
         <li>White-label option</li>
         <li>SLA guarantee</li>
-        <li>Custom integrations</li>
         <li>Priority support</li>
       </ul>
-      <button class="btn-plan" onclick="window.location.href='mailto:xcaliberai.official@gmail.com?subject=Enterprise Inquiry'">Contact Sales</button>
+      <button class="btn-plan" onclick="window.location.href='mailto:xcaliberai.official@gmail.com?subject=Enterprise'">Contact Sales</button>
     </div>
   </div>
-  <div style="margin-top:24px;background:var(--g1);border:1px solid var(--border);padding:20px">
-    <div style="font-size:11px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:12px">International Pricing</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
-      <div style="text-align:center;padding:12px;border:1px solid var(--border);background:var(--g3)"><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--blue)">€24</div><div style="font-size:9px;letter-spacing:2px;color:var(--dim);text-transform:uppercase">Pro · Europe</div></div>
-      <div style="text-align:center;padding:12px;border:1px solid var(--border);background:var(--g3)"><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--blue)">$28</div><div style="font-size:9px;letter-spacing:2px;color:var(--dim);text-transform:uppercase">Pro · USD</div></div>
-      <div style="text-align:center;padding:12px;border:1px solid var(--border);background:var(--g3)"><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--blue)">AED 99</div><div style="font-size:9px;letter-spacing:2px;color:var(--dim);text-transform:uppercase">Pro · UAE</div></div>
-      <div style="text-align:center;padding:12px;border:1px solid var(--border);background:var(--g3)"><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--blue)">SAR 99</div><div style="font-size:9px;letter-spacing:2px;color:var(--dim);text-transform:uppercase">Pro · Saudi</div></div>
+  <div style="margin-top:24px;background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:24px">
+    <div style="font-size:11px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:16px;font-weight:600">International Pricing — Professional Plan</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px">
+      <div style="text-align:center;padding:14px;border:1px solid var(--border);border-radius:8px"><div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--blue2)">€24</div><div style="font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:2px">Europe</div></div>
+      <div style="text-align:center;padding:14px;border:1px solid var(--border);border-radius:8px"><div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--blue2)">$28</div><div style="font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:2px">USD</div></div>
+      <div style="text-align:center;padding:14px;border:1px solid var(--border);border-radius:8px"><div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--blue2)">AED 99</div><div style="font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:2px">UAE</div></div>
+      <div style="text-align:center;padding:14px;border:1px solid var(--border);border-radius:8px"><div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--blue2)">SAR 99</div><div style="font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-top:2px">Saudi</div></div>
     </div>
   </div>
+</div>
 </div>
 </div>
 
 <!-- ══ ENTERPRISE PAGE ══ -->
 <div class="page" id="page-enterprise">
-<div class="page-wrap">
-  <div class="page-title">Enterprise Solutions</div>
-  <div class="page-sub">XCALIBER for the world's most powerful organizations</div>
-  <div class="fgrid">
-    <div class="fcard"><div class="fc-icon">🧠</div><div class="fc-title">XCALIBER MIND</div><div class="fc-desc">AI that ingests all your business data in real time and delivers exact strategic decisions with full confidence scoring and reasoning chains.</div></div>
-    <div class="fcard"><div class="fc-icon">💰</div><div class="fc-title">XCALIBER FLOW</div><div class="fc-desc">Next-generation financial intelligence. Optimize capital allocation, predict market movements, and automate investment decisions at scale.</div></div>
-    <div class="fcard"><div class="fc-icon">📊</div><div class="fc-title">XCALIBER CORE</div><div class="fc-desc">Universal intelligence feed. Clean, verified, real-time global data that powers your entire AI stack and decision infrastructure.</div></div>
-    <div class="fcard"><div class="fc-icon">🔐</div><div class="fc-title">XCALIBER NEXUS</div><div class="fc-desc">Ultra-encrypted private intelligence network for C-suite executives, sovereign funds, and ultra-high-net-worth decision makers.</div></div>
-    <div class="fcard"><div class="fc-icon">🌍</div><div class="fc-title">Global Deployment</div><div class="fc-desc">Deploy across Europe, Middle East, India, and Southeast Asia simultaneously with region-specific intelligence and full compliance.</div></div>
-    <div class="fcard"><div class="fc-icon">⚡</div><div class="fc-title">Custom AI Training</div><div class="fc-desc">XCALIBER learns your industry, your company, your market. A proprietary intelligence model trained on your business data.</div></div>
+<div class="page-header"><div class="page-title">Enterprise Solutions</div><div class="page-sub">XCALIBER for the world's most powerful organizations</div></div>
+<div class="enterprise-section" style="padding-top:0;background:transparent;border-top:none">
+<div class="enterprise-inner" style="padding-top:0">
+  <div class="e-grid">
+    <div class="e-card"><div class="e-icon">🧠</div><div class="e-title">XCALIBER MIND</div><div class="e-desc">AI that ingests all your business data in real time and delivers exact strategic decisions with full confidence scoring and reasoning chains.</div></div>
+    <div class="e-card"><div class="e-icon">💰</div><div class="e-title">XCALIBER FLOW</div><div class="e-desc">Next-generation financial intelligence. Optimize capital allocation, predict market movements, and automate investment decisions at scale.</div></div>
+    <div class="e-card"><div class="e-icon">📊</div><div class="e-title">XCALIBER CORE</div><div class="e-desc">Universal intelligence feed. Clean, verified, real-time global data that powers your entire AI stack and decision infrastructure.</div></div>
+    <div class="e-card"><div class="e-icon">🔐</div><div class="e-title">XCALIBER NEXUS</div><div class="e-desc">Ultra-encrypted private intelligence network for C-suite executives, sovereign funds, and ultra-high-net-worth decision makers.</div></div>
+    <div class="e-card"><div class="e-icon">🌍</div><div class="e-title">Global Deployment</div><div class="e-desc">Deploy across Europe, Middle East, India, and Southeast Asia simultaneously with region-specific intelligence and full compliance.</div></div>
+    <div class="e-card"><div class="e-icon">⚡</div><div class="e-title">Custom AI Training</div><div class="e-desc">XCALIBER learns your industry, your company, your market. A proprietary intelligence model trained on your business data.</div></div>
   </div>
-  <div style="margin-top:28px;background:var(--g1);border:1px solid var(--border);padding:28px;text-align:center">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;margin-bottom:10px">Ready to power your enterprise with XCALIBER?</div>
-    <div style="font-size:14px;color:var(--dim);margin-bottom:20px;font-weight:300">Custom pricing · Dedicated infrastructure · White-label solutions</div>
-    <button class="btn-main" style="max-width:300px;margin:0 auto" onclick="window.location.href='mailto:xcaliberai.official@gmail.com?subject=XCALIBER Enterprise Inquiry'">
-      <span>📧 &nbsp; CONTACT ENTERPRISE SALES</span>
-    </button>
+  <div style="margin-top:32px;background:linear-gradient(135deg,rgba(26,111,245,.1),rgba(0,212,255,.05));border:1px solid rgba(26,111,245,.2);border-radius:16px;padding:48px;text-align:center">
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:3px;margin-bottom:12px">Ready to Power Your Enterprise?</h2>
+    <p style="font-size:15px;color:var(--white3);margin-bottom:28px;font-weight:300">Custom pricing · Dedicated infrastructure · White-label solutions</p>
+    <button class="btn-primary" onclick="window.location.href='mailto:xcaliberai.official@gmail.com?subject=Enterprise Inquiry'">📧 &nbsp; Contact Enterprise Sales</button>
   </div>
+</div>
 </div>
 </div>
 
 <!-- ══ ABOUT PAGE ══ -->
 <div class="page" id="page-about">
-<div class="page-wrap" style="max-width:680px">
-  <div class="page-title">About XCALIBER</div>
-  <div class="page-sub">The world's first Civilization Intelligence Layer</div>
-  <div class="sblock"><div class="sb-title" style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px">The Vision</div><div style="font-size:14px;color:var(--dim);line-height:1.8;font-weight:300;margin-top:10px">XCALIBER is not just an AI tool. It is the intelligence layer that will power every major business decision on Earth — from a startup founder deciding their next move, to a sovereign wealth fund allocating billions. One platform. One source of truth. Infinite clarity.</div></div>
-  <div class="sblock"><div class="sb-title" style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px">Why We Built This</div><div style="font-size:14px;color:var(--dim);line-height:1.8;font-weight:300;margin-top:10px">Every day, businesses lose billions making wrong decisions. Consultants cost ₹50L and take months. Generic AI gives vague suggestions. Google gives 47 conflicting articles. XCALIBER gives one clear decision. Every time. In 60 seconds.</div></div>
-  <div class="sblock"><div class="sb-title">Platform Version</div><div style="font-size:12px;color:var(--dim);margin-top:8px;font-family:'JetBrains Mono',monospace">XCALIBER v2.0.0 — Decision Intelligence Platform<br>Deployed globally · Available 24/7<br>Europe · Middle East · India · Global</div></div>
-  <div class="sblock"><div class="sb-title">Contact</div><div style="font-size:13px;margin-top:8px"><a href="mailto:xcaliberai.official@gmail.com" style="color:var(--blue);text-decoration:none">xcaliberai.official@gmail.com</a></div></div>
+<div class="page-header"><div class="page-title">About XCALIBER</div><div class="page-sub">The world's first Civilization Intelligence Layer</div></div>
+
+<!-- FOUNDER SECTION -->
+<div class="founder-section" style="padding-top:40px">
+<div class="founder-inner">
+  <div class="founder-card">
+    <div class="founder-img-wrap">
+      <img src="founder.jpg" alt="Mohammad Shad Ahmed" class="founder-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div class="founder-img-placeholder" style="display:none">👤</div>
+    </div>
+    <div>
+      <div class="founder-tag">Meet the Founder</div>
+      <div class="founder-name">Mohammad<br>Shad Ahmed</div>
+      <div class="founder-role">Founder & CEO, XCALIBER</div>
+      <div class="founder-bio">Mohammad Shad Ahmed is the founder and CEO of XCALIBER — the world's first AI Decision Intelligence Platform. Driven by a vision to democratize strategic intelligence for businesses globally, Shad built XCALIBER from the ground up as a solo founder, believing that every business owner deserves access to world-class decision-making tools — regardless of size or budget. His mission is to make XCALIBER the intelligence layer that powers every major business decision on Earth, from startups in India to enterprises across Europe and the Middle East.</div>
+      <div class="founder-tags">
+        <span class="ftag">🇮🇳 India</span>
+        <span class="ftag">⚔ Solo Founder</span>
+        <span class="ftag">🌍 Global Vision</span>
+        <span class="ftag">📧 xcaliberai.official@gmail.com</span>
+      </div>
+    </div>
+  </div>
 </div>
+</div>
+
+<div class="about-section" style="padding-top:40px">
+<div class="about-inner">
+  <div class="a-block"><div class="a-title" style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px">The Vision</div><div class="a-text" style="margin-top:10px">XCALIBER is not just an AI tool. It is the intelligence layer that will power every major business decision on Earth — from a startup founder deciding their next move, to a sovereign wealth fund allocating billions. One platform. One source of truth. Infinite clarity.</div></div>
+  <div class="a-block"><div class="a-title" style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px">Why We Built This</div><div class="a-text" style="margin-top:10px">Every day, businesses lose billions making wrong decisions. Consultants cost ₹50L and take months. Generic AI gives vague suggestions. Google gives 47 conflicting articles. XCALIBER gives one clear decision. Every time. In 60 seconds.</div></div>
+  <div class="a-block"><div class="a-title">Contact</div><div style="margin-top:8px"><a href="mailto:xcaliberai.official@gmail.com" style="color:var(--blue2);text-decoration:none;font-size:14px">xcaliberai.official@gmail.com</a></div></div>
+</div>
+</div>
+</div>
+
+<!-- ══ HISTORY PAGE ══ -->
+<div class="page" id="page-history">
+<div class="page-header"><div class="page-title">Decision History</div><div class="page-sub">Your saved decisions — stored locally in your browser</div></div>
+<div class="history-section"><div class="history-inner"><div id="histList"></div></div></div>
 </div>
 
 <!-- ══ SETTINGS PAGE ══ -->
 <div class="page" id="page-settings">
-<div class="page-wrap">
-  <div class="page-title">Settings</div>
-  <div class="page-sub">Customize your XCALIBER experience</div>
+<div class="page-header"><div class="page-title">Settings</div><div class="page-sub">Customize your XCALIBER experience</div></div>
+<div class="settings-section"><div class="settings-inner">
   <div class="settings-grid">
     <div class="snav">
       <div class="sni on" onclick="showSec('general',this)">General</div>
@@ -610,58 +748,35 @@ footer{border-top:1px solid var(--border);padding:20px 24px;display:flex;align-i
     </div>
     <div>
       <div class="ssec on" id="sec-general">
-        <div class="sblock">
-          <div class="sb-title">Language</div>
-          <div class="sb-desc">Choose your preferred language for responses</div>
-          <select class="sf"><option>English</option><option>Arabic (عربي)</option><option>Hindi (हिंदी)</option><option>German</option><option>French</option></select>
-        </div>
-        <div class="sblock">
-          <div class="sb-title">Default Tone</div>
-          <select class="sf"><option>Strategic</option><option>Analytical</option><option>Direct</option><option>Creative</option><option>Conservative</option></select>
-        </div>
-        <div class="sblock">
-          <div class="sb-title">Region</div>
-          <select class="sf"><option>India (₹ INR)</option><option>UAE (AED)</option><option>Europe (€ EUR)</option><option>USA ($ USD)</option><option>Saudi Arabia (SAR)</option></select>
-        </div>
+        <div class="sblock"><div class="sb-t">Language</div><div class="sb-d">Choose your preferred language</div><select class="sf"><option>English</option><option>Arabic (عربي)</option><option>Hindi (हिंदी)</option><option>German</option><option>French</option></select></div>
+        <div class="sblock"><div class="sb-t">Default Tone</div><select class="sf"><option>Strategic</option><option>Analytical</option><option>Direct</option><option>Creative</option><option>Conservative</option></select></div>
+        <div class="sblock"><div class="sb-t">Region</div><select class="sf"><option>India (₹ INR)</option><option>UAE (AED)</option><option>Europe (€ EUR)</option><option>USA ($ USD)</option></select></div>
       </div>
       <div class="ssec" id="sec-api">
-        <div class="sblock">
-          <div class="sb-title">XCALIBER API Key</div>
-          <div class="sb-desc">Enter your XCALIBER API key to power the decision engine. Your key is stored only in your browser.</div>
-          <input class="fi" type="password" id="settingsKey" placeholder="Enter your XCALIBER API key..." style="margin-top:8px"/>
-          <button class="hbtn" style="margin-top:10px" onclick="saveKey()">Save Key</button>
-        </div>
+        <div class="sblock"><div class="sb-t">XCALIBER API Key</div><div class="sb-d">Stored only in your browser. Never sent to our servers.</div><input class="fi" type="password" id="settingsKey" placeholder="Enter your API key..." style="margin-top:8px"/><button class="hbtn" style="margin-top:10px" onclick="saveKey()">Save Key</button></div>
       </div>
       <div class="ssec" id="sec-appearance">
-        <div class="sblock">
-          <div class="sb-title">Display</div>
-          <div class="trow"><div><div class="tlabel">Animated Background</div><div class="tsub">Particles and orbital glows</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-          <div class="trow"><div><div class="tlabel">Show Confidence Score</div><div class="tsub">Display % confidence in results</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-          <div class="trow"><div><div class="tlabel">Compact Mode</div><div class="tsub">Reduce spacing</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+        <div class="sblock"><div class="sb-t">Display</div>
+          <div class="trow"><div><div class="tlabel">Animated Background</div><div class="tsub">Show orbital glows and effects</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="trow"><div><div class="tlabel">Show Confidence Score</div><div class="tsub">Display % in results</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
         </div>
       </div>
       <div class="ssec" id="sec-decisions">
-        <div class="sblock">
-          <div class="sb-title">Decision Preferences</div>
-          <div class="trow"><div><div class="tlabel">Auto-Save Decisions</div><div class="tsub">Save all decisions to history</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="sblock"><div class="sb-t">Decision Preferences</div>
+          <div class="trow"><div><div class="tlabel">Auto-Save Decisions</div><div class="tsub">Save all to history automatically</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
           <div class="trow"><div><div class="tlabel">Include Alternative Plans</div><div class="tsub">Always include backup strategy</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
           <div class="trow"><div><div class="tlabel">Risk Assessment</div><div class="tsub">Include risk analysis always</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
         </div>
       </div>
       <div class="ssec" id="sec-privacy">
-        <div class="sblock">
-          <div class="sb-title">Privacy</div>
-          <div class="sb-desc">All data stored locally in your browser. Nothing sent to XCALIBER servers.</div>
+        <div class="sblock"><div class="sb-t">Privacy</div><div class="sb-d">All data stored locally in your browser. Nothing sent to XCALIBER servers.</div>
           <div class="trow"><div><div class="tlabel">Local Storage Only</div></div><div class="tog on" style="opacity:.5"></div></div>
         </div>
-        <div class="sblock">
-          <div class="sb-title">Clear Data</div>
-          <button class="hbtn" style="border-color:#ff4444;color:#ff4444;margin-top:4px" onclick="if(confirm('Delete all data?')){localStorage.clear();location.reload()}">🗑 Clear All Data</button>
-        </div>
+        <div class="sblock"><div class="sb-t">Clear Data</div><button class="hbtn" style="border-color:#ff4444;color:#ff4444;margin-top:4px" onclick="if(confirm('Delete all data?')){localStorage.clear();location.reload()}">🗑 Clear All Data</button></div>
       </div>
     </div>
   </div>
-</div>
+</div></div>
 </div>
 
 </div><!-- end .app -->
@@ -678,223 +793,95 @@ footer{border-top:1px solid var(--border);padding:20px 24px;display:flex;align-i
 </footer>
 
 <script>
-// ── STATE ──
-let model = 'claude-sonnet-4-6';
-let tone = 'Strategic';
-let hist = JSON.parse(localStorage.getItem('xc-hist') || '[]');
-let freeLeft = parseInt(localStorage.getItem('xc-free-' + today()) || '3');
+let model='claude-sonnet-4-6',tone='Strategic';
+let hist=JSON.parse(localStorage.getItem('xc-hist')||'[]');
+function today(){return new Date().toDateString()}
+let freeLeft=parseInt(localStorage.getItem('xc-free-'+today())||'3');
+function updateCounter(){document.getElementById('trialLeft').textContent=freeLeft;document.getElementById('trialCount').textContent=freeLeft;document.getElementById('freeCounter').textContent=freeLeft+' FREE LEFT';}
+updateCounter();
 
-function today(){ return new Date().toDateString(); }
-function updateFreeCounter(){ 
-  document.getElementById('trialLeft').textContent = freeLeft;
-  document.getElementById('trialCount').textContent = freeLeft;
-  document.getElementById('freeCounter').textContent = freeLeft + ' FREE LEFT TODAY';
-}
-updateFreeCounter();
-
-// ── NAVIGATION ──
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nb').forEach(b=>{
-    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+id+"'"))b.classList.add('active');
-  });
+  document.querySelectorAll('.nb').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+id+"'"))b.classList.add('active');});
   if(id==='history')renderHist();
   window.scrollTo(0,0);
   gtag('event','page_view',{page_title:id});
 }
-
-// ── SETTINGS SECTIONS ──
 function showSec(id,el){
   document.querySelectorAll('.ssec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.sni').forEach(s=>s.classList.remove('on'));
-  document.getElementById('sec-'+id).classList.add('on');
-  el.classList.add('on');
+  document.getElementById('sec-'+id).classList.add('on');el.classList.add('on');
 }
-
-// ── MODEL & TONE ──
-function selModel(el,m){
-  document.querySelectorAll('#modelChips .chip').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
-  model=m;
-}
-function selTone(el,t){
-  document.querySelectorAll('#toneChips .chip').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
-  tone=t;
-}
-function setModel(el,m){
-  document.querySelectorAll('.mcard').forEach(c=>c.classList.remove('sel'));
-  el.classList.add('sel');
-  model=m;
-  document.querySelectorAll('#modelChips .chip').forEach(c=>{
-    if(c.getAttribute('onclick')&&c.getAttribute('onclick').includes("'"+m+"'"))c.classList.add('on');
-    else c.classList.remove('on');
-  });
-}
-
-// ── CHAR COUNT ──
-document.getElementById('prob').addEventListener('input',function(){
-  document.getElementById('cc').textContent=this.value.length;
-});
-
-// ── PAYMENT ──
+function selModel(el,m){document.querySelectorAll('#modelChips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');model=m;}
+function selTone(el,t){document.querySelectorAll('#toneChips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');tone=t;}
+function setModel(el,m){document.querySelectorAll('.model-card').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');model=m;}
+document.getElementById('prob').addEventListener('input',function(){document.getElementById('cc').textContent=this.value.length;});
 function payNow(plan){
-  const prices={starter:'499',pro:'1999',business:'7999'};
-  const names={starter:'XCALIBER Starter',pro:'XCALIBER Professional',business:'XCALIBER Business'};
-  alert('Redirecting to payment for '+names[plan]+' — ₹'+prices[plan]+'/month\n\nPayment via Razorpay\nContact: xcaliberai.official@gmail.com\n\nNote: After payment, you will receive your XCALIBER API key via email within 24 hours.');
-  window.location.href='mailto:xcaliberai.official@gmail.com?subject=XCALIBER '+names[plan]+' Payment&body=I want to subscribe to '+names[plan]+' at ₹'+prices[plan]+'/month. Please send payment details.';
-  gtag('event','purchase_intent',{plan:plan,value:prices[plan]});
+  const p={starter:'499',pro:'1999',business:'7999'};
+  const n={starter:'Starter',pro:'Professional',business:'Business'};
+  window.location.href='mailto:xcaliberai.official@gmail.com?subject=XCALIBER '+n[plan]+' Subscription&body=Hi, I want to subscribe to XCALIBER '+n[plan]+' at ₹'+p[plan]+'/month. Please send payment details.';
+  gtag('event','purchase_intent',{plan:plan});
 }
-
-function closeUpgrade(){ document.getElementById('upgradeWall').classList.remove('show'); }
-
-// ── MAIN DECISION ──
+function closeUpgrade(){document.getElementById('upgradeWall').classList.remove('show');}
 async function decide(){
-  const key = document.getElementById('xKey').value.trim() || localStorage.getItem('xc-key') || '';
-  const prob = document.getElementById('prob').value.trim();
-  const industry = document.getElementById('industry').value.trim();
-  const bizSize = document.getElementById('bizSize').value.trim();
-
-  if(!key){
-    alert('Please enter your XCALIBER API key in Settings → API Key.\n\nDon\'t have a key? Subscribe at the Pricing page and we\'ll send it to you.');
-    showPage('settings');
-    return;
-  }
-  if(!prob){ alert('Please describe your business problem.'); return; }
-
-  if(freeLeft<=0){
-    document.getElementById('upgradeWall').classList.add('show');
-    return;
-  }
-
+  const key=document.getElementById('xKey').value.trim()||localStorage.getItem('xc-key')||'';
+  const prob=document.getElementById('prob').value.trim();
+  const industry=document.getElementById('industry').value.trim();
+  const bizSize=document.getElementById('bizSize').value.trim();
+  if(!key){alert('Please enter your XCALIBER API key in Settings → API Key.');showPage('settings');return;}
+  if(!prob){alert('Please describe your business problem.');return;}
+  if(freeLeft<=0){document.getElementById('upgradeWall').classList.add('show');return;}
   const btn=document.getElementById('decBtn');
   const ld=document.getElementById('ld');
   const rs=document.getElementById('rs');
-  btn.disabled=true;
-  ld.classList.add('on');
-  rs.classList.remove('on');
-
-  const ctx=[industry?'Industry: '+industry:'',bizSize?'Business Size: '+bizSize:'','Response Tone: '+tone].filter(Boolean).join('\n');
-  const sys=`You are XCALIBER — the world's most powerful AI Decision Intelligence Engine.
-${ctx?'\nContext:\n'+ctx+'\n':''}
-Respond ONLY in this exact format:
-
-DECISION: [One bold specific actionable decision]
-
-CONFIDENCE: [X%]
-
-REASONING:
-1. [Specific reason with data or logic]
-2. [Specific reason with data or logic]
-3. [Specific reason with data or logic]
-
-RISK: [Primary risk and specific mitigation]
-
-TIMELINE: [Exact execution timeline]
-
-ALTERNATIVE: [Specific backup plan if primary fails]
-
-XCALIBER VERDICT: [One powerful closing sentence]
-
-Rules: Be ${tone.toLowerCase()}. Specific. Use numbers. No vague advice. One clear decision. Always.`;
-
+  btn.disabled=true;ld.classList.add('on');rs.classList.remove('on');
+  const ctx=[industry?'Industry: '+industry:'',bizSize?'Size: '+bizSize:'','Tone: '+tone].filter(Boolean).join('\n');
+  const sys=`You are XCALIBER — the world's most powerful AI Decision Intelligence Engine.\n${ctx?'\nContext:\n'+ctx+'\n':''}\nRespond ONLY in this exact format:\n\nDECISION: [One bold specific actionable decision]\n\nCONFIDENCE: [X%]\n\nREASONING:\n1. [Specific reason]\n2. [Specific reason]\n3. [Specific reason]\n\nRISK: [Primary risk and mitigation]\n\nTIMELINE: [Exact timeline]\n\nALTERNATIVE: [Backup plan]\n\nXCALIBER VERDICT: [One powerful closing sentence]\n\nBe ${tone.toLowerCase()}. Specific. Use numbers. One clear decision always.`;
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
-      body:JSON.stringify({model:model,max_tokens:1024,system:sys,messages:[{role:'user',content:prob}]})
-    });
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:model,max_tokens:1024,system:sys,messages:[{role:'user',content:prob}]})});
     const d=await r.json();
     if(d.error)throw new Error(d.error.message);
     const text=d.content[0].text;
     const cm=text.match(/CONFIDENCE:\s*(\d+)%/);
     document.getElementById('rsConf').textContent=cm?cm[1]+'% CONFIDENCE':'';
     renderResult(text);
-    ld.classList.remove('on');
-    rs.classList.add('on');
-    
-    // Deduct free trial
+    ld.classList.remove('on');rs.classList.add('on');
     freeLeft=Math.max(0,freeLeft-1);
     localStorage.setItem('xc-free-'+today(),freeLeft);
-    updateFreeCounter();
-    
-    // Save to history
+    updateCounter();
     const entry={id:Date.now(),q:prob.substring(0,80)+(prob.length>80?'...':''),full:prob,result:text,conf:cm?cm[1]+'%':'N/A',model:model,time:new Date().toLocaleString(),industry:industry||'General'};
-    hist.unshift(entry);
-    if(hist.length>50)hist=hist.slice(0,50);
+    hist.unshift(entry);if(hist.length>50)hist=hist.slice(0,50);
     localStorage.setItem('xc-hist',JSON.stringify(hist));
-    
-    gtag('event','decision_made',{model:model,tone:tone,industry:industry||'general'});
+    gtag('event','decision_made',{model:model,tone:tone});
   }catch(e){
-    ld.classList.remove('on');
-    rs.classList.add('on');
+    ld.classList.remove('on');rs.classList.add('on');
     document.getElementById('rsConf').textContent='ERROR';
-    document.getElementById('rsBody').innerHTML='<div style="padding:14px;background:#0d0000;border-left:2px solid #ff4444;color:#ff6666;font-size:13px;line-height:1.7">'+e.message+'<br><br>Check your API key in Settings.</div>';
+    document.getElementById('rsBody').innerHTML='<div style="padding:14px;background:rgba(255,0,0,.05);border-left:2px solid #ff4444;color:#ff6666;font-size:13px;border-radius:4px">'+e.message+'<br><br>Check your API key in Settings.</div>';
   }
   btn.disabled=false;
 }
-
-// ── RENDER RESULT ──
 function renderResult(text){
-  const secs=[
-    {k:'DECISION',l:'Decision'},
-    {k:'CONFIDENCE',l:'Confidence'},
-    {k:'REASONING',l:'Reasoning'},
-    {k:'RISK',l:'Risk & Mitigation'},
-    {k:'TIMELINE',l:'Timeline'},
-    {k:'ALTERNATIVE',l:'Alternative Plan'},
-    {k:'XCALIBER VERDICT',l:'XCALIBER Verdict'}
-  ];
-  let html='';
-  const lines=text.split('\n');
-  let cur=null,content=[];
-  lines.forEach(line=>{
-    const m=secs.find(s=>line.startsWith(s.k+':'));
-    if(m){if(cur)html+=mkSec(cur.l,content.join('\n').trim());cur=m;content=[line.substring(m.k.length+1).trim()];}
-    else if(cur)content.push(line);
-  });
+  const secs=[{k:'DECISION',l:'Decision'},{k:'CONFIDENCE',l:'Confidence'},{k:'REASONING',l:'Reasoning'},{k:'RISK',l:'Risk & Mitigation'},{k:'TIMELINE',l:'Timeline'},{k:'ALTERNATIVE',l:'Alternative Plan'},{k:'XCALIBER VERDICT',l:'XCALIBER Verdict'}];
+  let html='';const lines=text.split('\n');let cur=null,content=[];
+  lines.forEach(line=>{const m=secs.find(s=>line.startsWith(s.k+':'));if(m){if(cur)html+=mkSec(cur.l,content.join('\n').trim());cur=m;content=[line.substring(m.k.length+1).trim()];}else if(cur)content.push(line);});
   if(cur)html+=mkSec(cur.l,content.join('\n').trim());
   if(!html)html=mkSec('Analysis & Decision',text);
   document.getElementById('rsBody').innerHTML=html;
 }
-function mkSec(label,content){
-  const isV=label==='XCALIBER Verdict';
-  return `<div class="rs-section${isV?' rs-verdict':''}"><div class="rs-label">${label}</div><div class="rs-content${isV?'" style="color:var(--blue);font-weight:500':''}">${content}</div></div>`;
-}
-
-// ── HISTORY ──
+function mkSec(label,content){const isV=label==='XCALIBER Verdict';return`<div class="rs-sec${isV?' rs-verdict':''}"><div class="rs-label">${label}</div><div class="rs-content">${content}</div></div>`;}
 function renderHist(){
   const el=document.getElementById('histList');
-  if(!hist.length){el.innerHTML='<div class="empty"><div class="empty-i">⚔</div><div style="font-size:16px;font-weight:300;margin-bottom:6px">No decisions yet</div><div style="font-size:13px;color:var(--dim)">Make your first decision to see it here</div></div>';return;}
+  if(!hist.length){el.innerHTML='<div class="empty-state"><div class="empty-i">⚔</div><div style="font-size:16px;font-weight:300;margin-bottom:6px">No decisions yet</div><div style="font-size:13px">Make your first decision to see it here</div></div>';return;}
   el.innerHTML=hist.map(h=>`<div class="hi" onclick="loadHist(${h.id})"><div class="hi-icon">⚔</div><div class="hi-main"><div class="hi-q">${h.q}</div><div class="hi-meta"><span>${h.industry}</span><span>${h.model.includes('opus')?'XCI-2':h.model.includes('haiku')?'XCI-Lite':'XCI-1'}</span></div></div><div class="hi-right"><div class="hi-conf">${h.conf}</div><div class="hi-time">${h.time}</div></div></div>`).join('');
 }
-function loadHist(id){
-  const e=hist.find(h=>h.id===id);
-  if(!e)return;
-  document.getElementById('prob').value=e.full;
-  document.getElementById('cc').textContent=e.full.length;
-  document.getElementById('rsConf').textContent=e.conf+' CONFIDENCE';
-  renderResult(e.result);
-  document.getElementById('rs').classList.add('on');
-  showPage('decide');
-}
-
-// ── UTILS ──
-function copyRes(){const t=document.getElementById('rsBody').innerText;navigator.clipboard.writeText(t).then(()=>alert('Copied!'));}
+function loadHist(id){const e=hist.find(h=>h.id===id);if(!e)return;document.getElementById('prob').value=e.full;document.getElementById('cc').textContent=e.full.length;document.getElementById('rsConf').textContent=e.conf+' CONFIDENCE';renderResult(e.result);document.getElementById('rs').classList.add('on');showPage('decide');}
+function copyRes(){navigator.clipboard.writeText(document.getElementById('rsBody').innerText).then(()=>alert('Copied!'));}
 function saveRes(){alert('Saved to history!');showPage('history');}
 function clearRes(){document.getElementById('rs').classList.remove('on');document.getElementById('prob').value='';document.getElementById('cc').textContent='0';}
-function saveKey(){
-  const k=document.getElementById('settingsKey').value.trim();
-  if(k){localStorage.setItem('xc-key',k);document.getElementById('xKey').value=k;alert('API key saved!');}
-}
-
-// ── LOAD SAVED KEY ──
-window.onload=function(){
-  const k=localStorage.getItem('xc-key');
-  if(k){document.getElementById('xKey').value=k;document.getElementById('settingsKey').value=k;}
-};
+function saveKey(){const k=document.getElementById('settingsKey').value.trim();if(k){localStorage.setItem('xc-key',k);document.getElementById('xKey').value=k;alert('API key saved!');}}
+window.onload=function(){const k=localStorage.getItem('xc-key');if(k){document.getElementById('xKey').value=k;document.getElementById('settingsKey').value=k;}};
 </script>
 </body>
 </html>
